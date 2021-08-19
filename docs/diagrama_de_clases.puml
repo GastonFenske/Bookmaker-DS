@@ -1,4 +1,4 @@
-@startuml:
+@startuml
 class Cliente {
     - id: PK
     - nombre: String
@@ -31,6 +31,18 @@ class Partido {
     - equipo_local
     - equipo_visitante
 }
+
+Equipo --* Partido: equipo local
+Equipo --* Partido: equipo visitante
+
+Cliente --> Apuesta: realiza apuesta
+
+Cliente --|> Model
+Empresa --|> Model
+Partido --|> Model
+Equipo --|> Model
+
+Apuesta --> Partido: se realiza sobre
 
 
 @enduml

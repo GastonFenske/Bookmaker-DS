@@ -20,4 +20,14 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:////{PATH}{DB_NAME}'
     db.init_app(app)
 
+    import main.controllers as controllers
+    api.add_resource(controllers.ClientesController, '/clientes')
+    api.add_resource(controllers.ClienteController, '/cliente/<id>')
+    api.add_resource(controllers.PartidosController, '/partidos')
+    api.add_resource(controllers.PartidoController, '/partido/<id>')
+    api.add_resource(controllers.EquiposController, '/equipos')
+    api.add_resource(controllers.EquipoController, '/equipo/<id>')
+
+    api.init_app(app)
+
     return app
