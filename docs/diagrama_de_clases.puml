@@ -1,0 +1,36 @@
+@startuml:
+class Cliente {
+    - id: PK
+    - nombre: String
+    - apellido
+    - email 
+}
+
+class Empresa {
+    - id
+    - razon_social
+    - email
+}
+
+class Equipo {
+    - id
+    - nombre
+    - escudo
+    - pais 
+}
+
+class Apuesta {
+    - id 
+    - monto
+    - monto_minimo
+}
+
+class Partido {
+    - id
+    - fecha 
+    - equipo_local
+    - equipo_visitante
+}
+
+
+@enduml
