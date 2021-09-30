@@ -10,6 +10,7 @@ class Apuesta(db.Model):
     #__monto_minimo = db.Column('monto_minimo', db.Integer, nullable=False)
     __equipo_ganador_id = db.Column('equipo_ganador', db.ForeignKey('equipos.id'), nullable=False)
     #equipo_ganador = db.relationship('Equipo', back_populates='apuesta')
+    __activado = db.Column('activado', db.Boolean, default=True, nullable=False)
 
 
     @hybrid_property
@@ -53,8 +54,8 @@ class Apuesta(db.Model):
         return self.__monto_minimo
 
     @monto_minimo.setter
-    def monto_minimo(self, monot):
-        self.__monto_minimo = monot
+    def monto_minimo(self, monto):
+        self.__monto_minimo = monto
     
     @monto_minimo.deleter
     def monto_minimo(self):
@@ -69,3 +70,13 @@ class Apuesta(db.Model):
     @equipo_ganador_id.deleter
     def equipo_ganador_id(self):
         del self.__equipo_ganador_id    
+
+    @hybrid_property
+    def activado(self):
+        return self.__activado
+    @activado.setter
+    def activado(self, activado):
+        self.__activado = activado
+    @activado.deleter
+    def activado(self):
+        del self.__activado

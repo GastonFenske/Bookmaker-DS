@@ -27,6 +27,7 @@ def create_app():
     api.add_resource(controllers.PartidoController, '/partido/<id>')
     api.add_resource(controllers.EquiposController, '/equipos')
     api.add_resource(controllers.EquipoController, '/equipo/<id>')
+    api.add_resource(controllers.EmpresaController, '/empresas')
 
     api.init_app(app)
 
