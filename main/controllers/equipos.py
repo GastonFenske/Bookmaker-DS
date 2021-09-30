@@ -2,12 +2,15 @@ from .. import db
 from flask_restful import Resource
 from main.models import EquipoModel
 from flask import request, jsonify
+from main.map import EquipoSchema
+
+equipo_schema = EquipoSchema()
 
 class Equipo(Resource):
     def get(self, id):
         equipo = db.session.query(EquipoModel).get_or_404(id)
         try:
-            return equipo.to_json()
+            return equipo_schema.dump(equipo), 201
         except:
             return '', 404
 
@@ -20,19 +23,26 @@ class Equipo(Resource):
         except:
             return '', 404
 
+    def put(self, id):
+        equipo = db.session.query(EquipoModel).get_or_404(id)
+        data = request.get_json().items()
+        for key, value in data:
+            setattr(equipo, key, value)
+        try:
+            db.session.add(equipo)  
+            db.session.query()
+            return equipo_schema.dump(equipo), 201
+        except:
+            return '', 404
 
 class Equipos(Resource):
 
     def get(self):
         equipos = db.session.query(EquipoModel).all()
-
-        return jsonify({
-            'Equipos': [equipo.to_json() for equipo in equipos]
-        })
+        return equipo_schema.dump(equipos, many=True)
 
     def post(self):
-
-        equipo = EquipoModel.from_json(request.get_json())
+        equipo = equipo_schema.load(request.get_json())
         db.session.add(equipo)
         db.session.commit()
-        return equipo.to_json(), 201
+        return equipo_schema.dump(equipo), 201

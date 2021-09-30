@@ -1,0 +1,95 @@
+@startuml
+
+actor Admin
+boundary ClienteController
+boundary ClientesController
+participant ClienteSchema
+entity ClienteModel
+database data
+
+Admin -> ClienteController: GET by Id (Request)
+activate ClienteController
+ClienteController -> ClienteModel: get_or_404()
+activate ClienteModel
+CienteModel -> data: query (SELECT)
+ClienteModel <- data: Registro
+ClienteSchema <- ClienteModel: Objeto cliente
+deactivate ClienteModel
+activate ClienteSchema
+ClienteController <- ClienteSchema: json cliente
+deactivate ClienteSchema
+Admin <- ClienteController: json (Response)
+deactivate ClienteController
+
+
+Admin -> ClienteController: PUT by id (Request)
+activate ClienteController
+ClienteController -> ClienteModel: get_or_404()
+activate ClienteModel
+ClienteModel -> data: query (SELECT)
+ClienteModel <- data: Registro
+ClienteController <-ClienteModel: Objeto cliente
+deactivate ClienteModel
+ClienteController -> ClienteModel: Add
+activate ClienteModel
+ClienteController -> ClienteModel: Commit
+ClienteModel -> data: UPDATE
+ClienteModel <- data: Registro
+ClienteSchema <- ClienteModel: Objeto cliente
+deactivate ClienteModel
+activate ClienteSchema
+ClienteController <- ClienteSchema: Json ClienteModel
+deactivate ClienteSchema
+Admin <- ClienteController: json (Response)
+deactivate ClienteController
+
+Admin -> ClienteController: DELETE by id (Request)
+activate ClienteController
+ClienteController -> ClienteModel: get_or_404()
+activate ClienteModel
+ClienteModel -> data: query (SELECT)
+ClienteController <- data: Registro
+ClienteController <- ClienteModel
+deactivate ClienteModel
+ClienteController -> ClienteModel: delete
+activate ClienteModel
+ClienteController -> ClienteModel: Commit
+ClienteModel -> data: DELETE 
+deactivate ClienteModel
+Admin <- ClienteController: Request (Status 204)
+deactivate ClienteController
+
+Admin -> ClientesControllers: GET by Id (Request)
+activate ClientesControllers
+ClientesControllers -> ClienteModel: all
+activate ClienteModel
+ClienteModel -> data: Select
+ClienteModel <- data: Registros
+ClienteSchema <- ClienteModel: Coleccion de objetos
+deactivate ClienteModel
+activate ClienteSchema
+ClientesControllers <- ClienteSchema: dump many=True
+deactivate ClienteSchema
+Admin <- ClientesControllers: coleccion de json
+deactivate ClientesControllers
+
+Admin -> ClientesControllers: Post 
+activate ClientesControllers
+ClientesControllers -> ClienteSchema: load json
+activate ClienteSchema
+ClientesControllers <- ClienteSchema: objeto cliente
+deactivate ClienteSchema
+ClientesControllers -> ClienteModel: add
+activate ClienteModel
+ClientesControllers -> ClienteModel: commit
+ClienteModel -> data: insert
+ClienteModel <- data: registro Id
+ClienteSchema <- ClienteModel: objeto
+deactivate ClienteModel
+activate ClienteSchema
+ClientesControllers <- ClienteSchema: json
+deactivate ClienteSchema
+Admin <- ClientesControllers: json
+deactivate ClientesControllers
+
+@enduml

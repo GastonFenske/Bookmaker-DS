@@ -1,50 +1,61 @@
 from .. import db
+from sqlalchemy.ext.hybrid import hybrid_property
 
 class Equipo(db.Model):
-    
-    __id = db.Column(db.Integer, primary_key=True)
-    __nombre = db.Column(db.String(50), nullable=False)
-    __escudo = db.Column(db.String(120), nullable=False)
-    __pais = db.Column(db.String(120), nullable=False)
+    __tablename__ = 'equipos'
+    __id = db.Column('id', db.Integer, primary_key=True)
+    __nombre = db.Column('nombre', db.String(50), nullable=False)
+    __escudo = db.Column('escudo', db.String(120), nullable=False)
+    __pais = db.Column('pais', db.String(120), nullable=False)
+    __puntaje = db.Column('puntaje', db.Float, nullable=False)
+    #cuota = db.relationship('Cuota', back_populates='equipo', uselist=False)
 
-    def id_setter(self, id):
-        self.__id = id
-
-    def id_getter(self):
+    @hybrid_property
+    def id(self):
         return self.__id
+    @id.setter
+    def id(self, id):
+        self.__id = id
+    @id.deleter
+    def id(self):
+        del self.__id
 
-    def nombre_setter(self, nombre):
-        self.__nombre = nombre
-
-    def nombre_getter(self):
+    @hybrid_property
+    def nombre(self):
         return self.__nombre
+    @nombre.setter
+    def nombre(self, nombre):
+        self.__nombre = nombre
+    @nombre.deleter
+    def nombre(self):
+        del self.__nombre
 
-    def escudo_setter(self, escudo):
-        self.__escudo = escudo
-
-    def escudo_getter(self):
+    @hybrid_property
+    def escudo(self):
         return self.__escudo
-
-    def pais_setter(self, pais):
-        self.__pais = pais
-
-    def pais_getter(self):
+    @escudo.setter
+    def escudo(self, escudo):
+        self.__escudo = escudo
+    @escudo.deleter
+    def escudo(self):
+        del self.__escudo
+    
+    @hybrid_property
+    def pais(self):
         return self.__pais
+    @pais.setter
+    def pais(self, pais):
+        self.__pais = pais
+    @pais.deleter
+    def pais(self):
+        del self.__pais
 
-    def to_json(self):
-        equipo_json = {
-            'id': self.__id,
-            'nombre': self.__nombre,
-            'escudo': self.__escudo,
-            'pais': self.__pais
-        }
-        return equipo_json
-
-    @staticmethod
-    def from_json(equipo_json):
-        equipo = Equipo()
-        equipo.id_setter(equipo_json.get('id'))
-        equipo.nombre_setter(equipo_json.get('nombre'))
-        equipo.escudo_setter(equipo_json.get('escudo'))
-        equipo.pais_setter(equipo_json.get('pais'))
-        return equipo
+    @hybrid_property
+    def puntaje(self):
+        return self.__puntaje
+    @puntaje.setter
+    def puntaje(self, puntaje):
+        self.__puntaje = puntaje
+    @puntaje.deleter
+    def puntaje(self):
+        del self.__puntaje

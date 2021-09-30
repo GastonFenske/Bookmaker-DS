@@ -2,13 +2,15 @@ from .. import db
 from flask_restful import Resource
 from main.models import ClienteModel
 from flask import request, jsonify
+from main.map import ClienteSchema, ClienteFilters
+
+cliente_schema = ClienteSchema()
 
 class Cliente(Resource):
     
     def get(self, id):
-
         cliente = db.session.query(ClienteModel).get_or_404(id)
-        return cliente.to_json()
+        return cliente_schema.dump(cliente), 201
 
 
     def delete(self, id):
@@ -20,20 +22,30 @@ class Cliente(Resource):
         except:
             return '', 404
 
+    def put(self, id):
+        cliente = db.session.query(ClienteModel).get_or_404(id)
+        data = request.get_json().items()
+        for key, value in data:
+            setattr(cliente, key, value)
+        try:
+            db.session.add(cliente)
+            db.session.commit()
+            return cliente_schema.dump(cliente), 201
+        except:
+            return '', 404
+
 
 class Clientes(Resource):
     
     def get(self):
-
-        clientes = db.session.query(ClienteModel).all()
-
-        return jsonify({
-            'clientes': [cliente.to_json() for cliente in clientes]
-        })
+        clientes = db.session.query(ClienteModel)
+        cliente_filters = ClienteFilters(clientes)
+        for key, value in request.get_json().items():
+            clientes = cliente_filters.filter(key, value)
+        return cliente_schema.dump(clientes.all(), many=True)
 
     def post(self):
-
-        cliente = ClienteModel.from_json(request.get_json())
+        cliente = cliente_schema.load(request.get_json())
         db.session.add(cliente)
         db.session.commit()
-        return cliente.to_json(), 201
+        return cliente_schema.dump(cliente), 201

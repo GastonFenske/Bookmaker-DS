@@ -1,26 +1,71 @@
 from .. import db
+from sqlalchemy.ext.hybrid import hybrid_property
+import datetime as dt
 
 class Apuesta(db.Model):
-    
-    __id = db.Column(db.Integer, primary_key=True)
-    __monto = db.Column(db.Integer, nullable=False)
-    __monto_minimo = db.Column(db.Integer, nullable=False)
+    __tablename__ = 'apuestas'
+    __id = db.Column('id', db.Integer, primary_key=True)
+    __fecha = db.Column('fecha', db.DateTime, default=dt.datetime.now(), nullable=False)
+    __monto = db.Column('monto', db.Float, nullable=False)
+    #__monto_minimo = db.Column('monto_minimo', db.Integer, nullable=False)
+    __equipo_ganador_id = db.Column('equipo_ganador', db.ForeignKey('equipos.id'), nullable=False)
+    #equipo_ganador = db.relationship('Equipo', back_populates='apuesta')
 
 
-    def id_setter(self, id):
-        self.__id = id
-
-    def id_getter(self):
+    @hybrid_property
+    def id(self):
         return self.__id
 
-    def monto_setter(self, monto):
-        self.__monto = monto
+    @id.setter
+    def id(self, id):
+        self.__id = id
 
-    def monto_getter(self):
+    @id.deleter
+    def id(self):
+        del self.__id
+
+    @hybrid_property
+    def fecha(self):
+        return self.__fecha
+    @fecha.setter
+    def fecha(self, fecha):
+        self.__fecha = fecha
+    @fecha.deleter
+    def fecha(self):
+        del self.__fecha  
+
+
+
+    @hybrid_property
+    def monto(self):
         return self.__monto
 
-    def monto_minimo_setter(self, monto_minimo):
-        self.__monto_minimo = monto_minimo
+    @monto.setter
+    def monto(self, monto):
+        self.__monto = monto
+    
+    @monto.deleter
+    def monto(self):
+        del self.__monto
 
-    def monto_minimo_getter(self):
+    @hybrid_property
+    def monto_minimo(self):
         return self.__monto_minimo
+
+    @monto_minimo.setter
+    def monto_minimo(self, monot):
+        self.__monto_minimo = monot
+    
+    @monto_minimo.deleter
+    def monto_minimo(self):
+        del self.__monto_minimo
+    
+    @hybrid_property
+    def equipo_ganador_id(self):
+        return self.__equipo_ganador_id
+    @equipo_ganador_id.setter
+    def equipo_ganador_id(self, id):
+        self.__equipo_ganador_id = id
+    @equipo_ganador_id.deleter
+    def equipo_ganador_id(self):
+        del self.__equipo_ganador_id    

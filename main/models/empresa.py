@@ -1,27 +1,46 @@
 from .. import db
+from sqlalchemy.ext.hybrid import hybrid_property
 
 class Empresa(db.Model):
-    
-    __id = db.Column(db.Integer, primary_key=True)
-    __razon_social = db.Column(db.String(50), nullable=False)
-    __email = db.Column(db.String(120), nullable=False)
+    __talbename__ = 'empresas'
+    __id = db.Column('id', db.Integer, primary_key=True)
+    __razon_social = db.Column('razon_social', db.String(50), nullable=False)
+    __email = db.Column('email', db.String(120), nullable=False)
 
-    def id_setter(self, id):
-        self.__id = id
-
-    def id_getter(self):
+    @hybrid_property
+    def id(self):
         return self.__id
 
-    def razon_social_setter(self, razon):
-        self.__razon_social = razon
+    @id.setter
+    def id(self, id):
+        self.__id = id
 
-    def razon_social_getter(self):
+    @id.deleter
+    def id(self):
+        del self.__id
+
+    @hybrid_property
+    def razon_social(self):
         return self.__razon_social
 
-    def email_setter(self, email):
-        self.__email = email
+    @razon_social.setter
+    def razon_social(self, razon):
+        self.__razon_social = razon
 
-    def email_getter(self):
+    @razon_social.deleter
+    def razon_social(self):
+        del self.__razon_social
+
+    @hybrid_property
+    def email(self):
         return self.__email
+
+    @email.setter
+    def email(self, email):
+        self.__email = email
+    
+    @email.deleter
+    def email(self):
+        del self.__email
 
     

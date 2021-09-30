@@ -2,12 +2,15 @@ from .. import db
 from flask_restful import Resource
 from main.models import PartidoModel
 from flask import request, jsonify
+from main.map import PartidoSchema
+
+partido_schema = PartidoSchema()
 
 class Partido(Resource):
     def get(self, id):
         partido = db.session.query(PartidoModel).get_or_404(id)
         try:
-            return partido.to_json()
+            return partido_schema.dump(partido), 201
         except:
             return '', 404
 
@@ -20,18 +23,27 @@ class Partido(Resource):
         except:
             return '', 404
 
+    def put(self, id):
+        partido = db.session.query(PartidoSchema).get_or_404(id)
+        data = request.get_json().items()
+        for key, value in data:
+            setattr(partido, key, value)
+        try:
+            db.session.query(partido)
+            db.session.commit()
+            return partido_schema.dump(partido), 201
+        except:
+            return '', 404
+
 class Partidos(Resource):
 
     def get(self):
         partidos = db.session.query(PartidoModel).all()
-
-        return jsonify({
-            'Partidos': [partido.to_json() for partido in partidos]
-        })
+        return partido_schema.dump(partidos, many=True)
 
     def post(self):
-
-        partido = PartidoModel.from_json(request.get_json())
+        partido = partido_schema.load(request.get_json())
         db.session.add(partido)
         db.session.commit()
-        return partido.to_json(), 201
+        return partido_schema.dump(partido), 201
+

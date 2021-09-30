@@ -1,55 +1,98 @@
 from .. import db
-
+from sqlalchemy.ext.hybrid import hybrid_property
+import datetime as dt
 class Partido(db.Model):
-    
-    __id = db.Column(db.Integer, primary_key=True)
-    __fecha = db.Column(db.String(50), nullable=False)
-    __equipo_local_id = db.Column(db.Integer, db.ForeignKey('equipo._Equipo__id'), nullable=False)
-    equipo_local = db.relationship('Equipo',foreign_keys=[__equipo_local_id])
+    __tablename__ = 'partidos'
+    __id = db.Column('id', db.Integer, primary_key=True)
+    __fecha = db.Column('fecha', db.DateTime, nullable=False, default=dt.datetime.now())
+    __equipo_local_id = db.Column('equipo_local', db.Integer, db.ForeignKey('equipos.id'), nullable=False)
+    #equipo_local = db.relationship('Equipo',foreign_keys=[__equipo_local_id])
+    __equipo_visitante_id = db.Column('equipo_visistante', db.Integer, db.ForeignKey('equipos.id'), nullable=False)
+    #equipo_visitante = db.relationship('Equipo', foreign_keys=[__equipo_visitante_id])
+    __finalizado = db.Column('finalizado', db.Boolean)
+    __ganador = db.Column('ganador', db.String(100))
+    __goles_local = db.Column('goles_local', db.Integer, nullable=False)
+    __goles_visitante = db.Column('goles_visitante', db.Integer, nullable=False)
+    cuota = db.relationship('Cuota', back_populates='partido', uselist=False)
 
-    __equipo_visitante_id = db.Column(db.Integer, db.ForeignKey('equipo._Equipo__id'), nullable=False)
-    equipo_visitante = db.relationship('Equipo', foreign_keys=[__equipo_visitante_id])
 
-    def id_setter(self, id):
-        self.__id = id
-
-    def id_getter(self):
+    @hybrid_property
+    def id(self):
         return self.__id
+    @id.setter
+    def id(self, id):
+        self.__id = id
+    @id.deleter
+    def id(self):
+        del self.__id
 
-    def fecha_setter(self, fecha):
-        self.__fecha = fecha
-
-    def fecha_getter(self):
+    @hybrid_property
+    def fecha(self):
         return self.__fecha
-
-    def equipo_local_id_setter(self, equipo_local_id):
-        self.__equipo_local_id = equipo_local_id
-
-    def equipo_local_id_getter(self):
+    @fecha.setter
+    def fecha(self, fecha):
+        self.__fecha = fecha
+    @fecha.deleter
+    def fecha(self):
+        del self.__fecha
+    
+    @hybrid_property
+    def equipo_local_id(self):
         return self.__equipo_local_id
+    @equipo_local_id.setter
+    def equipo_local_id(self, id):
+        self.__equipo_local_id = id
+    @equipo_local_id.deleter
+    def equipo_local_id(self):
+        del self.__equipo_local_id
 
-    def equipo_visitante_id_setter(self, equipo_visitante_id):
-        self.__equipo_visitante_id = equipo_visitante_id
-
-    def equipo_visitante_id_getter(self):
+    @hybrid_property
+    def equipo_visitante_id(self):
         return self.__equipo_visitante_id
+    @equipo_visitante_id.setter
+    def equipo_visitante_id(self, id):
+        self.__equipo_visitante_id = id
+    @equipo_visitante_id.deleter
+    def equipo_visitante_id(self):
+        del self.__equipo_visitante_id
 
-    def to_json(self):
-        partido_json = {
-            'id': self.__id,
-            'fecha': self.__fecha,
-            'equipo_local': self.equipo_local.to_json(),
-            'equipo_visitante': self.equipo_visitante.to_json()
-        }
-        return partido_json
+    @hybrid_property
+    def finalizado(self):
+        return self.__finalizado
+    @finalizado.setter
+    def finalizado(self, finalizado):
+        self.__finalizado = finalizado
+    @finalizado.deleter
+    def finalizado(self):
+        del self.__finalizado
 
-    @staticmethod
-    def from_json(partido_json):
-        partido = Partido()
-        partido.id_setter(partido_json.get('id'))
-        partido.fecha_setter(partido_json.get('fecha'))
-        partido.equipo_local_id_setter(partido_json.get('equipo_local_id'))
-        partido.equipo_visitante_id_setter(partido_json.get('equipo_visitante_id'))
-        return partido
+    @hybrid_property
+    def ganador(self):
+        return self.__ganador
+    @ganador.setter
+    def ganador(self, ganador):
+        self.__ganador = ganador
+    @ganador.deleter
+    def ganador(self):
+        del self.__ganador
 
+    @hybrid_property
+    def goles_local(self):
+        return self.__goles_local
+    @goles_local.setter
+    def goles_local(self, goles):
+        self.__goles_local = goles
+    @goles_local.deleter
+    def goles_local(self):
+        del self.__goles_local
+    
+    @hybrid_property
+    def goles_visitante(self):
+        return self.__goles_visitante
+    @goles_visitante.setter
+    def goles_visitante(self, goles):
+        self.__goles_visitante = goles
+    @goles_visitante.deleter
+    def goles_visitante(self):
+        del self.__goles_visitante
 

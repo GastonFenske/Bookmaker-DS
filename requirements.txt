@@ -2,3 +2,5 @@ flask
 python-dotenv
 flask-restful
 flask-sqlalchemy
+flask-marshmallow
+Faker
