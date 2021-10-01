@@ -6,6 +6,7 @@ class ClienteSchema(Schema):
     apellido = fields.String(required=True)
     nombre = fields.String(required=True)
     email = fields.String(required=True, validate=validate.Email())
+    activado = fields.Boolean(required=True)
 
     @post_load
     def make_cliente(self, data, **kwargs):

@@ -1,6 +1,9 @@
 from .. import db
 from main.models import PartidoModel
-from .repositoriobase import Create, Read, Delete, Update 
+from .repositoriobase import Create, Read, Delete, Update
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class PartidoRepositorio(Create, Read, Delete, Update):
@@ -34,7 +37,11 @@ class PartidoRepositorio(Create, Read, Delete, Update):
         return objeto
 
     def delete(self, id):
-        objeto = db.session.query(self.modelo).get_or_404(id)
-        db.session.delete(objeto)
-        db.session.commit()
+        try:
+            objeto = db.session.query(self.modelo).get_or_404(id)
+            db.session.delete(objeto)
+            db.session.commit()
+        except Exception as error:
+            logger.error(f'No se pudo borrar %s {id}')
+            db.session.rollback()
 

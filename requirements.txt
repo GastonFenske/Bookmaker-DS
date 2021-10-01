@@ -4,3 +4,5 @@ flask-restful
 flask-sqlalchemy
 flask-marshmallow
 Faker
+sqlalchemy-filters
+colorama

@@ -3,9 +3,11 @@ from flask import Flask
 from dotenv import load_dotenv
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
+import logging
 
 api = Api()
 db = SQLAlchemy()
+logging.basicConfig(level=logging.INFO, format=f'%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s')
 
 def create_app():
     app = Flask(__name__)
@@ -28,6 +30,7 @@ def create_app():
     api.add_resource(controllers.EquiposController, '/equipos')
     api.add_resource(controllers.EquipoController, '/equipo/<id>')
     api.add_resource(controllers.EmpresaController, '/empresas')
+    api.add_resource(controllers.ApuestaController, '/apuestas')
 
     api.init_app(app)
 

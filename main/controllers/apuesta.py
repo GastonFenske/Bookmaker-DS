@@ -1,6 +1,5 @@
 from flask_restful import Resource
 from flask import request
-from main import services
 from main.services import PartidoService
 
 

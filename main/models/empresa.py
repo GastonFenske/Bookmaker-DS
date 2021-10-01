@@ -6,6 +6,7 @@ class Empresa(db.Model):
     __id = db.Column('id', db.Integer, primary_key=True)
     __razon_social = db.Column('razon_social', db.String(50), nullable=False)
     __email = db.Column('email', db.String(120), nullable=False)
+    __activado = db.Column('activado', db.Boolean, default=True, nullable=False)
 
     @hybrid_property
     def id(self):
@@ -42,5 +43,16 @@ class Empresa(db.Model):
     @email.deleter
     def email(self):
         del self.__email
+
+    @hybrid_property
+    def activado(self):
+        return self.__activado
+    @activado.setter
+    def activado(self, activado):
+        self.__activado = activado
+    @activado.deleter
+    def activado(self):
+        del self.__activado
+
 
     

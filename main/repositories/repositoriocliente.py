@@ -17,7 +17,7 @@ class ClienteRepositorio(Create, Read, Delete, Update):
         return objeto
 
     def find_all(self):
-        objetos = db.session.query(self.modelo).all()
+        objetos = db.session.query(self.modelo).filter(self.activado == True).all()
         return objetos
 
     def create(self, objeto):
@@ -35,10 +35,15 @@ class ClienteRepositorio(Create, Read, Delete, Update):
 
     def delete(self, id):
         objeto = db.session.query(self.modelo).get_or_404(id)
-        db.session.delete(objeto)
-        db.session.commit()
+        #db.session.delete(objeto)
+        #db.session.commit()
+        self.soft_delete(objeto, id)
 
-    def __soft_delete(self, objeto):
+    def __soft_delete(self, objeto, id):
         objeto.activado = False #
         self.update(objeto, id)
+
+    def soft_delete(self, objeto, id):
+        return self.__soft_delete(objeto, id)
+    
 

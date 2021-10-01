@@ -1,3 +1,6 @@
 from .repositorio import Repositorio
 from .repositoriobase import Create, Update, Delete, Read
 from .repositoriopartido import PartidoRepositorio
+from .repositorioapuesta import ApuestaRepositorio
+from .repositorioempresa import EmpresaRepositorio
+from .repositoriocliente import ClienteRepositorio
