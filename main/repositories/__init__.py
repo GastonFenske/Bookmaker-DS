@@ -4,3 +4,4 @@ from .repositoriopartido import PartidoRepositorio
 from .repositorioapuesta import ApuestaRepositorio
 from .repositorioempresa import EmpresaRepositorio
 from .repositoriocliente import ClienteRepositorio
+from .repositorioequipo import EquipoRepositorio

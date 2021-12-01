@@ -33,7 +33,7 @@ deactivate ApuestaModel
 activate ApuestaSchema
 ApuestaSchema -> ApuestaController: Json
 deactivate ApuestaSchema
-Cliente -> ApuestaController: Json
+Cliente <- ApuestaController: Json
 deactivate ApuestaController
 
 @enduml

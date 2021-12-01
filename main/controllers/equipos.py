@@ -3,13 +3,18 @@ from flask_restful import Resource
 from main.models import EquipoModel
 from flask import request, jsonify
 from main.map import EquipoSchema
+from main.services import EquipoService
 import logging
 
 equipo_schema = EquipoSchema()
+equipo_service = EquipoService()
 logger = logging.getLogger(__name__)
 
-class Equipo():
-    pass
+class Equipos(Resource):
+
+    def get(self):
+        return equipo_schema.dump(equipo_service.obtener_equipos(), many=True)
+
 
 
 
