@@ -30,7 +30,8 @@ def create_app():
     api.add_resource(controllers.EquiposController, '/equipos')
     #api.add_resource(controllers.EquipoController, '/equipo/<id>')
     api.add_resource(controllers.EmpresaController, '/empresas')
-    api.add_resource(controllers.ApuestaController, '/apuestas')
+    api.add_resource(controllers.ApuestaController, '/apuesta/<id>')
+    api.add_resource(controllers.ApuestasController, '/apuestas')
 
     api.init_app(app)
 

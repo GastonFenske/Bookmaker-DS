@@ -3,7 +3,7 @@ from main.models import ApuestaModel
 
 class ApuestaSchema(Schema):
     id = fields.Int(dump_only=True)
-    fecha = fields.DateTime(required=True)
+    fecha = fields.DateTime(required=False)
     monto = fields.Float(required=True)
     equipo_ganador = fields.Int(required=True)
 

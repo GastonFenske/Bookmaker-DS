@@ -9,3 +9,4 @@ class Empresa(Resource):
 
     def get(self):
         return empresa_schema.dump(empresa_service.obtener_empresas(), many=True)
+
