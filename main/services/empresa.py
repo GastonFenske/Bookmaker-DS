@@ -10,4 +10,8 @@ class EmpresaService:
     def obtener_empresa_por_id(self, id):
         return repositorio.find_one(id)
 
+    def create_empresa(self, objeto):
+        """"""
+        return repositorio.create(objeto)
+
         

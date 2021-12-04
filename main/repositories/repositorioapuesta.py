@@ -1,6 +1,7 @@
 from .. import db
 from main.models import ApuestaModel
 from .repositoriobase import Create, Read
+from flask import request
 
 
 
@@ -18,8 +19,19 @@ class ApuestaRepositorio(Create, Read):
         return objeto
 
     def find_all(self):
-        objetos = db.session.query(self.modelo).all()
+        """"""
+        objetos = db.session.query(self.modelo)
+        if request.get_json():
+            filters = request.get_json().items()
+            for key, value in filters:
+                if key == 'cliente':
+                    objetos = objetos.filter(self.modelo.cliente == value)    
         return objetos
+
+    # def find_by_client(self, client_id):
+    #     objeto = db.session.query(self.modelo)
+    #     objeto = objeto.filter(self.modelo.cliente == client_id)
+    #     return objeto
 
     def create(self, objeto):
         db.session.add(objeto)

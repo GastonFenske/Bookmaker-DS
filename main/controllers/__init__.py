@@ -6,5 +6,6 @@ from .partidos import Partidos as PartidosController
 from .equipos import Equipos as EquiposController
 from .equipos import Equipos as EquiposController
 from .empresas import Empresa as EmpresaController
+from .empresas import Empresas as EmpresasController
 from .apuesta import Apuesta as ApuestaController
 from .apuesta import Apuestas as ApuestasController
