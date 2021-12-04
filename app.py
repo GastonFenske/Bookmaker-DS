@@ -37,7 +37,8 @@ def load_partidos():
     with open('./docs/partidos.csv', encoding='utf-8') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         for row in csv_reader:
-            partido = PartidoModel(fecha=dt.datetime.strptime(row[0], formato), equipo_local_id=row[1], equipo_visitante_id=row[2], finalizado=False, goles_local=0, goles_visitante=0) 
+            # partido = PartidoModel(fecha=dt.datetime.strptime(row[0], formato), equipo_local_id=row[1], equipo_visitante_id=row[2], finalizado=False, goles_local=0, goles_visitante=0) 
+            partido = PartidoModel(equipo_local_id=row[1], equipo_visitante_id=row[2]) 
             cuota = CuotaModel(probabilidad_local=float(row[3]), probabilidad_empate=float(row[4]), probabilidad_visitante=float(row[5]))
 
             partido.cuota = cuota

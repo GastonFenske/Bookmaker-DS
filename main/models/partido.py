@@ -1,6 +1,7 @@
 from .. import db
 from sqlalchemy.ext.hybrid import hybrid_property
 import datetime as dt
+
 class Partido(db.Model):
     __tablename__ = 'partidos'
     __id = db.Column('id', db.Integer, primary_key=True)
@@ -9,10 +10,10 @@ class Partido(db.Model):
     #equipo_local = db.relationship('Equipo',foreign_keys=[__equipo_local_id])
     __equipo_visitante_id = db.Column('equipo_visistante', db.Integer, db.ForeignKey('equipos.id'), nullable=False)
     #equipo_visitante = db.relationship('Equipo', foreign_keys=[__equipo_visitante_id])
-    __finalizado = db.Column('finalizado', db.Boolean)
-    __ganador = db.Column('ganador', db.String(100))
-    __goles_local = db.Column('goles_local', db.Integer, nullable=False)
-    __goles_visitante = db.Column('goles_visitante', db.Integer, nullable=False)
+    __finalizado = db.Column('finalizado', db.Boolean, default=False)
+    __ganador = db.Column('ganador', db.String(100), default=None, nullable=True)
+    # __goles_local = db.Column('goles_local', db.Integer, nullable=False)
+    # __goles_visitante = db.Column('goles_visitante', db.Integer, nullable=False)
     cuota = db.relationship('Cuota', back_populates='partido', uselist=False)
 
 
@@ -76,23 +77,23 @@ class Partido(db.Model):
     def ganador(self):
         del self.__ganador
 
-    @hybrid_property
-    def goles_local(self):
-        return self.__goles_local
-    @goles_local.setter
-    def goles_local(self, goles):
-        self.__goles_local = goles
-    @goles_local.deleter
-    def goles_local(self):
-        del self.__goles_local
+    # @hybrid_property
+    # def goles_local(self):
+    #     return self.__goles_local
+    # @goles_local.setter
+    # def goles_local(self, goles):
+    #     self.__goles_local = goles
+    # @goles_local.deleter
+    # def goles_local(self):
+    #     del self.__goles_local
     
-    @hybrid_property
-    def goles_visitante(self):
-        return self.__goles_visitante
-    @goles_visitante.setter
-    def goles_visitante(self, goles):
-        self.__goles_visitante = goles
-    @goles_visitante.deleter
-    def goles_visitante(self):
-        del self.__goles_visitante
+    # @hybrid_property
+    # def goles_visitante(self):
+    #     return self.__goles_visitante
+    # @goles_visitante.setter
+    # def goles_visitante(self, goles):
+    #     self.__goles_visitante = goles
+    # @goles_visitante.deleter
+    # def goles_visitante(self):
+    #     del self.__goles_visitante
 

@@ -1,6 +1,6 @@
 from flask_restful import Resource
 from flask import request
-from main.services import PartidoService, ApuestaService
+from main.services import ApuestaService
 from main.map import ApuestaSchema, apuesta_schema
 from .. import db
 from main.repositories import ApuestaRepositorio
@@ -11,7 +11,8 @@ repositorio_apuesta = ApuestaRepositorio()
 
 class Apuesta(Resource):
     def get(self):
-        return PartidoService.obtener_partidos_no_finalizados()
+        """"""
+        #return PartidoService.obtener_partidos_no_finalizados()
 
 
 class Apuestas(Resource):
