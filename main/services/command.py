@@ -14,4 +14,8 @@ class Tarea(Command):
     
     def execute(self, param):
         for tarea in self.lista:
+            print(self.lista, "[LISTA DE TAREAS]")
+            print(tarea)
+            print(self.lista.index(tarea), "[INDICE DE LA TAREA QUE ESTA RECORRIENDO EL FOR]")
             tarea.execute(param)
+            #return tarea.execute(param)

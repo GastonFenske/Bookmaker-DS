@@ -1,10 +1,12 @@
 from flask_restful import Resource
 from flask import request
-from main.services import PartidoService
+from main.services import PartidoService, ApuestaService
 from main.map import ApuestaSchema, apuesta_schema
 from .. import db
+from main.repositories import ApuestaRepositorio
 
 apuesta_schema = ApuestaSchema()
+repositorio_apuesta = ApuestaRepositorio()
 
 
 class Apuesta(Resource):
@@ -13,9 +15,18 @@ class Apuesta(Resource):
 
 
 class Apuestas(Resource):
+    # def post(self):
+    #     """Metodo para crear una apuesta"""
+    #     apuesta = apuesta_schema.load(request.get_json())
+    #     db.session.add(apuesta)
+    #     db.session.commit()
+    #     return apuesta_schema.dump(apuesta)
+
     def post(self):
-        """Metodo para crear una apuesta"""
+        services = ApuestaService()
         apuesta = apuesta_schema.load(request.get_json())
-        db.session.add(apuesta)
-        db.session.commit()
-        return apuesta_schema.dump(apuesta)
+        #apuesta = repositorio_apuesta.create()
+        #print(services.registrar_apuestas(apuesta))
+        return services.agregar_apuesta(apuesta)
+        return services.registrar_apuestas(apuesta)
+        

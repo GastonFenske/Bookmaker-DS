@@ -8,8 +8,7 @@ class Equipo(db.Model):
     __escudo = db.Column('escudo', db.String(120), nullable=False)
     __pais = db.Column('pais', db.String(120), nullable=False)
     __puntaje = db.Column('puntaje', db.Float, nullable=False)
-    #cuota = db.relationship('Cuota', back_populates='equipo', uselist=False)
-    # apuestas = db.relationship('Apuesta', back_populates="equipo_ganador", cascade="all, delete-orphan")
+    apuestas = db.relationship('Apuesta', back_populates="equipo_ganador", cascade="all, delete-orphan")
 
     @hybrid_property
     def id(self):

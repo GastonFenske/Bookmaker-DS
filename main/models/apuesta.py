@@ -7,11 +7,11 @@ class Apuesta(db.Model):
     __id = db.Column('id', db.Integer, primary_key=True)
     __fecha = db.Column('fecha', db.DateTime, default=datetime.now(), nullable=False)
     __monto = db.Column('monto', db.Float, nullable=False)
-    __equipo_ganador = db.Column('equipo_ganador', db.ForeignKey('equipos.id'), nullable=False)
-    # equipo_ganador = db.relationship('Equipo', back_populates='apuestas')
+    __equipo_ganador_id = db.Column('equipo_ganador_id', db.ForeignKey('equipos.id'), nullable=False)
+    equipo_ganador = db.relationship('Equipo', back_populates='apuestas')
 
-    #__partido = db.Column('partido', db.Integer, db.ForeignKey('partidos.id'), nullable=False)
-    #__cliente = db.Column('cliente', db.Integer, db.ForeignKey('clientes.id'), nullable=False)
+    __partido = db.Column('partido', db.Integer, db.ForeignKey('partidos.id'), nullable=False)
+    __cliente = db.Column('cliente', db.Integer, db.ForeignKey('clientes.id'), nullable=False)
 
 
     @hybrid_property
@@ -63,36 +63,36 @@ class Apuesta(db.Model):
         del self.__monto_minimo
     
     @hybrid_property
-    def equipo_ganador(self):
-        return self.__equipo_ganador
-    @equipo_ganador.setter
-    def equipo_ganador(self, id):
-        self.__equipo_ganador = id
-    @equipo_ganador.deleter
-    def equipo_ganador(self):
-        del self.__equipo_ganador    
+    def equipo_ganador_id(self):
+        return self.__equipo_ganador_id
+    @equipo_ganador_id.setter
+    def equipo_ganador_id(self, id):
+        self.__equipo_ganador_id = id
+    @equipo_ganador_id.deleter
+    def equipo_ganador_id(self):
+        del self.__equipo_ganador_id   
 
     @hybrid_property
     def partido(self):
         return self.__partido
 
-    # @partido.setter
-    # def partido(self, partido):
-    #     self.__partido = partido
+    @partido.setter
+    def partido(self, partido):
+        self.__partido = partido
 
-    # @partido.deleter
-    # def partido(self):
-    #     del self.__partido
+    @partido.deleter
+    def partido(self):
+        del self.__partido
 
-    # @hybrid_property
-    # def cliente(self):
-    #     return self.__cliente
+    @hybrid_property
+    def cliente(self):
+        return self.__cliente
 
-    # @cliente.setter
-    # def cliente(self, cliente):
-    #     self.__cliente = cliente
+    @cliente.setter
+    def cliente(self, cliente):
+        self.__cliente = cliente
 
-    # @cliente.deleter
-    # def cliente(self):
-    #     del self.__cliente 
+    @cliente.deleter
+    def cliente(self):
+        del self.__cliente 
 
