@@ -1,5 +1,5 @@
 from .. import db
-from main.models import ApuestaModel, EquipoModel
+from main.models import ApuestaModel, EquipoModel, ClienteModel, PartidoModel
 from .command import Command, Tarea
 from main.map import ApuestaSchema, apuesta_schema
 from .decorators import validar_apuesta, validar_equipo, validar_monto, validar_partido, validar_cliente
@@ -14,12 +14,14 @@ class ApuestaService:
         # tarea.agregar(ValidarEquipo(apuesta.equipo_ganador_id))
         tarea.agregar(ValidarEquipo())
         # tarea.agregar(ValidarMontos())
+
         tarea.agregar(GuardarApuesta())
 
         orden_a_ejecutar = tarea.execute(apuesta)
-        #print(orden_a_ejecutar, "[ORDEN A EJECUTAR]")
-        return tarea.execute(apuesta)
-        return orden_a_ejecutar
+        #print(orden_a_ejecutar, "[ORDEN A EJECUTAR]") 
+        tarea.execute(apuesta)
+        #return tarea.execute(apuesta)
+        #return orden_a_ejecutar
 
 
     def agregar_apuesta(self, apuesta):

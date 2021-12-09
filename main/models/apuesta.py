@@ -12,6 +12,7 @@ class Apuesta(db.Model):
 
     __partido = db.Column('partido', db.Integer, db.ForeignKey('partidos.id'), nullable=False)
     __cliente = db.Column('cliente', db.Integer, db.ForeignKey('clientes.id'), nullable=False)
+    __ganancia = db.Column('ganacia', db.Float, nullable=False)
 
 
     @hybrid_property
@@ -95,4 +96,16 @@ class Apuesta(db.Model):
     @cliente.deleter
     def cliente(self):
         del self.__cliente 
+
+    @hybrid_property
+    def ganancia(self):
+        return self.__ganancia
+
+    @ganancia.setter
+    def ganancia(self, ganancia):
+        self.__ganancia = ganancia
+
+    @ganancia.deleter
+    def ganancia(self):
+        del self.__ganancia 
 

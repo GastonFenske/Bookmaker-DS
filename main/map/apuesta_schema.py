@@ -8,6 +8,7 @@ class ApuestaSchema(Schema):
     equipo_ganador_id = fields.Int(required=True)
     partido = fields.Int(required=True)
     cliente = fields.Int(required=True)
+    ganancia = fields.Float(required=False)
 
     @post_load
     def make_apuesta(self, data, **kwargs):

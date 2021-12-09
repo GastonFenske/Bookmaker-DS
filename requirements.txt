@@ -6,3 +6,4 @@ flask-marshmallow
 Faker
 sqlalchemy-filters
 colorama
+flask-mail

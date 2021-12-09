@@ -34,5 +34,5 @@ class Apuestas(Resource):
         return services.registrar_apuestas(apuesta)
 
     def get(self):
-        return apuesta_schema.dump(repositorio_apuesta.find_all(), many=True)
+        return apuesta_schema.dump(repositorio_apuesta.find_wins(), many=True)
         

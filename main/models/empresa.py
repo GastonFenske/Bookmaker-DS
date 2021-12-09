@@ -8,6 +8,14 @@ class Empresa(db.Model):
     __email = db.Column('email', db.String(120), nullable=False)
     __activado = db.Column('activado', db.Boolean, default=True, nullable=False)
 
+    __instancia = None
+
+    def __new__(cls):
+        if Empresa.__instancia is None:
+            print('Nueva instancia de empresa')
+            Empresa.__instancia = object.__new__(cls)
+            return Empresa.__instancia
+
     @hybrid_property
     def id(self):
         return self.__id
