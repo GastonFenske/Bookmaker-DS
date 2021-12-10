@@ -1,0 +1,1 @@
+from .validate_apuesta import ValidateApuesta

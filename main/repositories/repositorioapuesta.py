@@ -4,7 +4,8 @@ from .. import db
 from main.models import ApuestaModel, PartidoModel, CuotaModel
 from .repositoriobase import Create, Read
 from flask import request
-# from main.services.decorators import singleton
+# from main.services.decorators import singleton, validar_cuota
+from abc import ABC, abstractmethod
 
 
 def singleton(cls):
@@ -64,28 +65,41 @@ class ApuestaRepositorio(Create, Read):
     #     return objeto
 
     def create(self, objeto):
-        cuota = db.session.query(CuotaModel).filter(CuotaModel.partido_id == objeto.partido)
+        # Habria traer la cuota desde el repositorio de cuota
+        # cuota = db.session.query(CuotaModel).filter(CuotaModel.partido_id == objeto.partido)[0]
 
-        partido_local = db.session.query(PartidoModel).filter((PartidoModel.equipo_local_id == objeto.equipo_ganador_id) & (PartidoModel.id == objeto.partido)).count()
-        print(objeto.equipo_ganador_id, objeto.partido, "PARAM")
-        probabilidad = None
-        print(partido_local, "PARTIDO LOCAL")
-        if partido_local != 0:
-            print("ENTRA AL PARTIDO LOCAL")
-            probabilidad = cuota[0].probabilidad_local
-        else:
-            print("ENTRA")
-            probabilidad = cuota[0].probabilidad_visitante
-
-        #print(cuota)
-        # print(cuota[0].probabilidad_local)
-
-
-        objeto.ganancia = objeto.monto * probabilidad
-        print(objeto.ganancia, "[GANANCIA]")
+        # probabilidad = set_probabilidad(objeto, cuota)
+        # objeto.ganancia = objeto.monto * probabilidad
         db.session.add(objeto)
         db.session.commit()
-        return objeto
+        return objeto    
 
+def validar_partido_local(objeto):
+    partido_local = db.session.query(PartidoModel).filter((PartidoModel.equipo_local_id == objeto.equipo_ganador_id) & (PartidoModel.id == objeto.partido)).count()
+    return True if partido_local != 0 else False
+
+def set_probabilidad(objeto, cuota):
+    if validar_partido_local(objeto):
+        probabilidad_local = ProbabilidadLocal()
+        probabilidad = probabilidad_local.calcular_probabilidad(cuota)
+        return probabilidad
+    probabilidad_visitante = ProbabilidadVisitante()
+    probabilidad = probabilidad_visitante.calcular_probabilidad(cuota)
+    return probabilidad
+
+
+class ProbabilidadStrategy(ABC):
+    def calcular_probabilidad(self, cuota):
+        """Calcular probabilidad"""
+
+class ProbabilidadLocal(ProbabilidadStrategy):
+    def calcular_probabilidad(self, cuota):
+        probabilidad = cuota.probabilidad_local
+        return probabilidad
+
+class ProbabilidadVisitante(ProbabilidadStrategy):
+    def calcular_probabilidad(self, cuota):
+        probabilidad = cuota.probabilidad_visitante
+        return probabilidad
     
 
