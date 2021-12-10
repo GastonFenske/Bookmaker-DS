@@ -21,12 +21,6 @@ class Apuesta(Resource):
 
 
 class Apuestas(Resource):
-    # def post(self):
-    #     """Metodo para crear una apuesta"""
-    #     apuesta = apuesta_schema.load(request.get_json())
-    #     db.session.add(apuesta)
-    #     db.session.commit()
-    #     return apuesta_schema.dump(apuesta)
 
     def post(self):
         apuesta = apuesta_schema.load(request.get_json())
