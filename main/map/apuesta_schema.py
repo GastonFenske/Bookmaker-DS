@@ -5,7 +5,7 @@ class ApuestaSchema(Schema):
     id = fields.Int(dump_only=True)
     fecha = fields.DateTime(required=False)
     monto = fields.Float(required=True)
-    equipo_ganador_id = fields.Int(required=True)
+    equipo_ganador_id = fields.Int(required=True, allow_none=True)
     partido = fields.Int(required=True)
     cliente = fields.Int(required=True)
     ganancia = fields.Float(required=False)

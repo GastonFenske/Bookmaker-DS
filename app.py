@@ -50,11 +50,11 @@ def load_partidos():
 
 if __name__ == '__main__':
 
-    # db.drop_all()
+    db.drop_all()
 
     db.create_all()
-    # load_equipos()
-    # load_clientes()
-    # load_partidos()
+    load_equipos()
+    load_clientes()
+    load_partidos()
 
     app.run(port=os.getenv("PORT"), debug=True)

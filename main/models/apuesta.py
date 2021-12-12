@@ -7,7 +7,7 @@ class Apuesta(db.Model):
     __id = db.Column('id', db.Integer, primary_key=True)
     __fecha = db.Column('fecha', db.DateTime, default=datetime.now(), nullable=False)
     __monto = db.Column('monto', db.Float, nullable=False)
-    __equipo_ganador_id = db.Column('equipo_ganador_id', db.ForeignKey('equipos.id'), nullable=False)
+    __equipo_ganador_id = db.Column('equipo_ganador_id', db.ForeignKey('equipos.id'), nullable=True)
     equipo_ganador = db.relationship('Equipo', back_populates='apuestas')
 
     __partido = db.Column('partido', db.Integer, db.ForeignKey('partidos.id'), nullable=False)

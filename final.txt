@@ -1,1 +1,3 @@
 Patron singleton en las clases de los repositorios, para que los intancie una vez
+Comprobar si se estan guardando objetos dentro de objetos en las consultas, para despues tratar de pasarlos a los schemas
+Se podria agregar un resultado_estimado: (gana local, gana visitante, empate) al json de cuando creamos la apuesta

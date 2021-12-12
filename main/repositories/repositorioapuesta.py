@@ -1,11 +1,7 @@
-from main.models.partido import Partido
-from flask.signals import request_started
 from .. import db
 from main.models import ApuestaModel, PartidoModel, CuotaModel
 from .repositoriobase import Create, Read
 from flask import request
-# from main.services.decorators import singleton, validar_cuota
-from abc import ABC, abstractmethod
 from main.utils import SingletonPattern
 
 singleton_pattern = SingletonPattern()
@@ -24,7 +20,6 @@ class ApuestaRepositorio(Create, Read):
         objeto = db.session.query(self.modelo).get_or_404(id)
         return objeto
 
-
     def find_wins(self):
         objetos = db.session.query(self.modelo).filter(self.modelo.equipo_ganador_id == PartidoModel.ganador)
         if request.get_json():
@@ -34,9 +29,7 @@ class ApuestaRepositorio(Create, Read):
                     objetos = objetos.filter(self.modelo.cliente == value)
         return objetos
 
-
     def find_all(self):
-        """"""
         objetos = db.session.query(self.modelo)
         if request.get_json():
             filters = request.get_json().items()
@@ -44,7 +37,6 @@ class ApuestaRepositorio(Create, Read):
                 if key == 'cliente':
                     objetos = objetos.filter(self.modelo.cliente == value)    
         return objetos
-
 
     def create(self, objeto):
         db.session.add(objeto)

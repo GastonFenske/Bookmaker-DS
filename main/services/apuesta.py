@@ -1,9 +1,4 @@
-from main.models.cuota import Cuota
-from .. import db
-from main.models import ApuestaModel, EquipoModel, ClienteModel, PartidoModel, CuotaModel
-from .command import Command, Tarea
 from main.map import ApuestaSchema, apuesta_schema
-from .decorators import validar_apuesta, validar_equipo, validar_monto, validar_partido, validar_cliente
 from main.repositories import ApuestaRepositorio, CuotaRepositorio
 from abc import ABC
 from main.validate import ValidatePartido
@@ -26,8 +21,12 @@ class ApuestaService:
             probabilidad_local = ProbabilidadLocal()
             probabilidad = probabilidad_local.calcular_probabilidad(cuota)
             return probabilidad
-        probabilidad_visitante = ProbabilidadVisitante()
-        probabilidad = probabilidad_visitante.calcular_probabilidad(cuota)
+        if validate_partido.validar_partido_visitante(objeto):
+            probabilidad_visitante = ProbabilidadVisitante()
+            probabilidad = probabilidad_visitante.calcular_probabilidad(cuota)
+            return probabilidad
+        probabilidad_empate = ProbabilidadEmpate()
+        probabilidad = probabilidad_empate.calcular_probabilidad(cuota)
         return probabilidad
 
 class ProbabilidadStrategy(ABC):
@@ -42,4 +41,9 @@ class ProbabilidadLocal(ProbabilidadStrategy):
 class ProbabilidadVisitante(ProbabilidadStrategy):
     def calcular_probabilidad(self, cuota):
         probabilidad = cuota.probabilidad_visitante
+        return probabilidad
+
+class ProbabilidadEmpate(ProbabilidadStrategy):
+    def calcular_probabilidad(self, cuota):
+        probabilidad = cuota.probabilidad_empate
         return probabilidad
