@@ -9,9 +9,14 @@ partido_schema =PartidoSchema()
 partido_repositorio = PartidoRepositorio()
 
 class PartidoService:
-    def obtener_partidos_no_finalizados():
+
+    def obtener_partidos_no_finalizados(self):
         partidos = db.session.query(PartidoModel).filter('finalizado' == False).all()
         return partidos
+
+
+    def obtener_partido_by_id(self, id):
+        return partido_repositorio.find_one(id)
 
 
     def agregar_partido(self, partido):

@@ -4,6 +4,20 @@ from .. import db
 class ValidatePartido():
 
 
+    def validar_partido(self, partido_id):
+        def decorator(function):
+            def wrapper(*args, **kwargs):
+                partido = db.session.query(PartidoModel).get(partido_id)
+                #Podria validar que exista y otra funcion que valide si esta finalizado
+                if partido:
+                    return function(*args, **kwargs)
+                return 'Ese partido no existe', 404
+            return wrapper
+        return decorator
+
+    def validar_partido_finalizado(self, id):
+        """"""
+
     #quizas aca tambien se puede colocar un strategy
     def validar_partido_local(self, objeto):
         partido_local = db.session.query(PartidoModel).filter((PartidoModel.equipo_local_id == objeto.equipo_ganador_id) & (PartidoModel.id == objeto.partido)).count()

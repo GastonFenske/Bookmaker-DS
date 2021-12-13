@@ -1,3 +1,4 @@
+from main import services
 from .. import db
 from flask_restful import Resource
 from main.models import PartidoModel
@@ -5,17 +6,20 @@ from flask import request, jsonify
 from main.map import PartidoSchema
 from main.repositories import PartidoRepositorio
 from main.services import PartidoService
+from main.validate import ValidatePartido
 
 partido_schema = PartidoSchema()
 partido_repositorio = PartidoRepositorio()
+service = PartidoService()
+validate_partido = ValidatePartido()
 
 class Partido(Resource):
     def get(self, id):
-        partido = db.session.query(PartidoModel).get_or_404(id)
-        try:
-            return partido_schema.dump(partido), 201
-        except:
-            return '', 404
+        @validate_partido.validar_partido(id)
+        def validated():
+            return partido_schema.dump(service.obtener_partido_by_id(id))
+        return validated()
+
 
     def delete(self, id):
         partido = db.session.query(PartidoModel).get_or_404(id)
