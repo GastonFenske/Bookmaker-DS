@@ -1,15 +1,18 @@
+from operator import or_
 from .. import db
 from main.models import EquipoModel, PartidoModel, ClienteModel, CuotaModel
 from functools import wraps
+from sqlalchemy import or_
 
 #Strategy, un decorador mas general o algo ase
 class ValidateApuesta():
 
-    def validar_equipo(self, equipo_id: int):
+    def validar_equipo(self, objeto):
         def decorator(function):
             def wrapper(*args, **kwargs):
-                equipo = db.session.query(EquipoModel).get(equipo_id)
-                if equipo or equipo_id == None:
+                equipos = db.session.query(EquipoModel).filter(or_(EquipoModel.id == PartidoModel.equipo_local_id, EquipoModel.id == PartidoModel.equipo_visitante_id) & (PartidoModel.id == objeto.partido)).all()
+                equipos = [e.id for e in equipos]
+                if objeto.equipo_ganador_id in equipos or objeto.equipo_ganador_id == None:
                     return function(*args, **kwargs)
                 return 'Equipo no encontrado', 404
             return wrapper
@@ -50,7 +53,7 @@ class ValidateApuesta():
         def decorator(function):
             def wrapper(*args, **kwargs):
                 @self.validar_cliente(objeto.cliente)
-                @self.validar_equipo(objeto.equipo_ganador_id)
+                @self.validar_equipo(objeto)
                 @self.validar_monto(objeto.monto)
                 @self.validar_partido(objeto.partido)
                 def add():

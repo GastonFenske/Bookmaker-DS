@@ -1,3 +1,8 @@
 Patron singleton en las clases de los repositorios, para que los intancie una vez
 Comprobar si se estan guardando objetos dentro de objetos en las consultas, para despues tratar de pasarlos a los schemas
 Se podria agregar un resultado_estimado: (gana local, gana visitante, empate) al json de cuando creamos la apuesta
+Agregar que cuando coloquemos un ganador en un partido, se le sumen los puntos a dicho equipo y que las apuestas de ese partido, se ajusten a ganadas o perdidas
+Cambiar en cuotas, los nombres probabilidades por cuotas
+Cuando agreguemos un partido que automaticamente se agregue una cuota de ese partido
+
+El ORM esta cargando las relaciones, el problema parece que son los schemas

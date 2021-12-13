@@ -13,7 +13,7 @@ class ApuestaService:
     def agregar_apuesta(self, apuesta):
         cuota = cuota_repositorio.find_one(apuesta)
         probabilidad = self.set_probabilidad(apuesta, cuota)
-        apuesta.ganancia = apuesta.monto * probabilidad
+        apuesta.ganancia = round(apuesta.monto * probabilidad, 2)
         return apuesta_schema.dump(apuesta_repositorio.create(apuesta))
 
     def set_probabilidad(self, objeto, cuota):

@@ -7,7 +7,7 @@ class Cuota(db.Model):
     __probabilidad_local = db.Column('local', db.Float, nullable=False)
     __probabilidad_empate = db.Column('empate', db.Float, nullable=False)
     __probabilidad_visitante = db.Column('visitante', db.Float, nullable=False)
-    __partido_id = db.Column('partido_id', db.Integer, db.ForeignKey('partidos.id'))
+    __partido_id = db.Column('partido_id', db.Integer, db.ForeignKey('partidos.id'), nullable=False)
     partido = db.relationship('Partido', back_populates='cuota')
     #__equipo_id = db.Column('equipo_id', db.Integer, db.ForeignKey('equipos.id'))
     #equipo = db.relationship('Equipo', back_populates='cuota')

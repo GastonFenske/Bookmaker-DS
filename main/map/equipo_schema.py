@@ -7,6 +7,7 @@ class EquipoSchema(Schema):
     nombre = fields.String(required=True)
     escudo = fields.String(required=True)
     pais = fields.String(required=True)
+    puntaje = fields.Float(required=False, Default=0.0)
 
     @post_load
     def make_equipo(self, data, **kwargs):

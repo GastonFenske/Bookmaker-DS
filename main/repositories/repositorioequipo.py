@@ -16,7 +16,7 @@ class EquipoRepositorio(Create, Read, Update, Delete):
         return objetos
 
     def find_one(self, id):
-        objeto = db.session.query(self.modelo).get_or_404(id)
+        objeto = db.session.query(self.modelo).get(id)
         return objeto
 
     def create(self, objeto):
@@ -24,9 +24,8 @@ class EquipoRepositorio(Create, Read, Update, Delete):
         db.session.commit()
         return objeto
 
-    #La clase abstracta tiene problemas si no se crean sus metodos abstractos
     def delete(self, id):
-        objeto = db.session.query(self.modelo).get_or_404(id)
+        objeto = db.session.query(self.modelo).get(id)
         # db.session.delete(objeto)
         # db.session.commit()
         self.__soft_delete(objeto, id)
@@ -38,3 +37,9 @@ class EquipoRepositorio(Create, Read, Update, Delete):
         db.session.add(objeto)
         db.session.commit()
         return objeto
+
+    def __soft_delete(objeto):
+        objeto.activado = False
+
+    def soft_delete(self, objeto):
+        return self.__soft_delete(objeto)

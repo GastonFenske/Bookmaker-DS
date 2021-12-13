@@ -1,8 +1,10 @@
+from sqlalchemy.sql.elements import or_
 from .. import db
 from main.models import ApuestaModel, PartidoModel, CuotaModel
 from .repositoriobase import Create, Read
 from flask import request
 from main.utils import SingletonPattern
+from sqlalchemy import or_
 
 singleton_pattern = SingletonPattern()
 
@@ -21,7 +23,7 @@ class ApuestaRepositorio(Create, Read):
         return objeto
 
     def find_wins(self):
-        objetos = db.session.query(self.modelo).filter(self.modelo.equipo_ganador_id == PartidoModel.ganador)
+        objetos = db.session.query(self.modelo).filter(or_(self.modelo.equipo_ganador_id == PartidoModel.ganador, self.modelo.equipo_ganador_id == None) & (PartidoModel.finalizado == True))
         if request.get_json():
             filters = request.get_json().items()
             for key, value in filters:

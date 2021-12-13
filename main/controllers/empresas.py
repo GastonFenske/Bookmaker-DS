@@ -14,7 +14,6 @@ class Empresa(Resource):
 class Empresas(Resource):
     """"""
     def post(self):
-        """Aca podria agregar el singleton cuando creamos el objeto empresa"""
         empresa = empresa_schema.load(request.get_json())
-        return empresa_service.create_empresa(empresa)
+        return empresa_schema.dump(empresa_service.create_empresa(empresa), many=False)
 

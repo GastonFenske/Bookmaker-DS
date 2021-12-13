@@ -4,6 +4,10 @@ from faker import Faker
 from main.models import ClienteModel, EquipoModel, CuotaModel, PartidoModel
 import datetime as dt
 import csv
+from main.controllers.cuota import aplicar_probabilidades
+from main.map.couta_schema import CuotaSchema
+
+cuota_schema = CuotaSchema()
 
 app = create_app()
 
@@ -38,23 +42,36 @@ def load_partidos():
         csv_reader = csv.reader(csv_file, delimiter=',')
         for row in csv_reader:
             # partido = PartidoModel(fecha=dt.datetime.strptime(row[0], formato), equipo_local_id=row[1], equipo_visitante_id=row[2], finalizado=False, goles_local=0, goles_visitante=0) 
-            partido = PartidoModel(equipo_local_id=row[1], equipo_visitante_id=row[2]) 
-            cuota = CuotaModel(probabilidad_local=float(row[3]), probabilidad_empate=float(row[4]), probabilidad_visitante=float(row[5]))
+            partido = PartidoModel(equipo_local_id=row[1], equipo_visitante_id=row[2])
+            # cuota = CuotaModel(probabilidad_local=float(row[3]), probabilidad_empate=float(row[4]), probabilidad_visitante=float(row[5])) 
 
-            partido.cuota = cuota
+            # partido.cuota = cuota
             db.session.add(partido)
-
             db.session.commit()
+
+def load_cuotas():
+    partidos = db.session.query(PartidoModel).all()
+    for partido in partidos:
+        json = {
+            "partido_id": partido.id
+        }
+        cuota = cuota_schema.load(json)
+        aplicar_probabilidades(cuota)
+        db.session.add(cuota)
+        db.session.commit()
+
+
 
 
 
 if __name__ == '__main__':
 
-    db.drop_all()
+    # db.drop_all()
 
     db.create_all()
-    load_equipos()
-    load_clientes()
-    load_partidos()
+    # load_equipos()
+    # load_clientes()
+    # load_partidos()
+    # load_cuotas()
 
     app.run(port=os.getenv("PORT"), debug=True)

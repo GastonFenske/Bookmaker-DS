@@ -8,6 +8,7 @@ class Equipo(db.Model):
     __escudo = db.Column('escudo', db.String(120), nullable=False)
     __pais = db.Column('pais', db.String(120), nullable=False)
     __puntaje = db.Column('puntaje', db.Float, nullable=False)
+    __activado = db.Column('activado', db.Boolean, nullalble=False, default=False)
     apuestas = db.relationship('Apuesta', back_populates="equipo_ganador", cascade="all, delete-orphan")
 
     @hybrid_property
@@ -59,3 +60,13 @@ class Equipo(db.Model):
     @puntaje.deleter
     def puntaje(self):
         del self.__puntaje
+
+    @hybrid_property
+    def activado(self):
+        return self.__activado
+    @activado.setter
+    def activado(self, activado):
+        self.__activado = activado
+    @activado.deleter
+    def activado(self):
+        del self.__activado

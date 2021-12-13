@@ -7,13 +7,6 @@ empresa_schema = EmpresaSchema()
 
 class EmpresaRepositorio(Create, Read, Update, Delete):
 
-    # __instancia = None
-
-    # def __new__(cls):
-    #     if EmpresaRepositorio.__instancia is None:
-    #         print('Nueva instancia')
-    #         EmpresaRepositorio.__instancia = object.__new__(cls)
-    #         return EmpresaRepositorio.__instancia
 
     def __init__(self):
         self.__modelo = EmpresaModel
@@ -31,21 +24,11 @@ class EmpresaRepositorio(Create, Read, Update, Delete):
         objeto = db.session.query(self.modelo).get_or_404(id)
         return objeto
 
-    # def create(self, objeto):
-    #     db.session.add(objeto)
-    #     db.session.commit()
-    #     return objeto
 
     def create(self, objeto):
-        # print("[ENTRA A CREATE DEL REPOSITORIO]")
-        instancia = db.session.query(self.modelo).all()
-        # print(instancia, "[INSTANCIA]")
-        if not instancia:
-            # print("[ESTA ENTRANDO A INSTANCIA IS NONE]")
-            db.session.add(objeto)
-            db.session.commit()
-            return empresa_schema.dump(objeto)
-        return 'Instancia ya creada', 409
+        db.session.add(objeto)
+        db.session.commit()
+        return objeto
 
     def delete(self, id):
         objeto = db.session.query(self.modelo).get_or_404(id)

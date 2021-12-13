@@ -13,29 +13,22 @@ logger = logging.getLogger(__name__)
 class Equipos(Resource):
 
     def get(self):
+        #Aca podriamos filtrar por pais o algun otro tipo de filtrado
         return equipo_schema.dump(equipo_service.obtener_equipos(), many=True)
 
 
+    def post(self):
+        equipo = equipo_schema.load(request.get_json())
+        return equipo_schema.dump(equipo_service.agregar_equipo(equipo))
 
 
+class Equipo(Resource):
 
+    def get(self, id):
+        return equipo_schema.dump(equipo_service.obtener_equipo_por_id(id))
 
-# class Equipo(Resource):
-#     def get(self, id):
-#         equipo = db.session.query(EquipoModel).get_or_404(id)
-#         try:
-#             return equipo_schema.dump(equipo), 201
-#         except:
-#             return '', 404
-
-#     def delete(self, id):
-#         equipo = db.session.query(EquipoModel).get_or_404(id)
-#         try:
-#             db.session.delete(equipo)
-#             db.session.commit()
-#             return '', 204
-#         except:
-#             return '', 404
+    def delete(self, id):
+        return equipo_schema.dump(equipo_service.eliminar_equipo(id))
 
 #     def put(self, id):
 #         equipo = db.session.query(EquipoModel).get_or_404(id)
