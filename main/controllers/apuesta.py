@@ -3,7 +3,7 @@ from flask import request
 from main.services import ApuestaService
 from main.map import ApuestaSchema, apuesta_schema
 from main.repositories import ApuestaRepositorio
-from main.validate import ValidateApuesta
+from main.validate import ValidateApuesta, ValidatePartido, ValidateEquipo, validate_equipo
 
 apuesta_schema = ApuestaSchema()
 repositorio_apuesta = ApuestaRepositorio()
