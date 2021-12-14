@@ -1,7 +1,7 @@
-from main.map import ApuestaSchema, apuesta_schema
+from main.map import ApuestaSchema
 from main.repositories import ApuestaRepositorio, CuotaRepositorio
 from abc import ABC
-from main.validate import ValidatePartido
+from main.validate.validate_partido import ValidatePartido
 
 apuesta_schema = ApuestaSchema()
 apuesta_repositorio = ApuestaRepositorio()

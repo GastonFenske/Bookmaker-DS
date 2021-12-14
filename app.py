@@ -5,7 +5,7 @@ from main.models import ClienteModel, EquipoModel, CuotaModel, PartidoModel
 import datetime as dt
 import csv
 # from main.controllers.cuota import aplicar_probabilidades
-from main.services import CuotaService
+from main.services.cuota import CuotaService
 from main.map import CuotaSchema
 
 

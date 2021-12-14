@@ -4,4 +4,5 @@ from .command import Command, Tarea
 from .apuesta import ApuestaService
 from .equipo import EquipoService
 from .cuota import CuotaService
+from .cliente import ClienteService
 # from .decorators import singleton 
