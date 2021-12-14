@@ -3,12 +3,16 @@ from main.models import PartidoModel
 from .repositoriobase import Create, Read, Delete, Update
 import logging
 from .repositoriocuota import CuotaRepositorio
+# from main.services import CuotaService
 from main.map import CuotaSchema
+
+# from main.controllers.cuota import aplicar_probabilidades
 
 logger = logging.getLogger(__name__)
 
 cuota_repositorio = CuotaRepositorio()
 cuota_schema = CuotaSchema()
+# cuota_service = CuotaService()
 
 class PartidoRepositorio(Create, Read, Delete, Update):
 
@@ -35,23 +39,17 @@ class PartidoRepositorio(Create, Read, Delete, Update):
             "partido_id": objeto.id
         }
         cuota = cuota_schema.load(json)
-        cuota_repositorio.create(cuota)
+        # aplicar_probabilidades(cuota)
         return objeto
 
-    def update(self, data, id):
-        objeto = db.session.query(self.modelo).get_or_404(id)
-        for key, value in data:
-            setattr(objeto, key, value)
+    def update(self, objeto):
         db.session.add(objeto)
         db.session.commit()
         return objeto
 
     def delete(self, id):
-        try:
-            objeto = db.session.query(self.modelo).get_or_404(id)
-            db.session.delete(objeto)
-            db.session.commit()
-        except Exception as error:
-            logger.error(f'No se pudo borrar %s {id}')
-            db.session.rollback()
+        partido = db.session.query(self.modelo).get(id)
+        db.session.delete(partido)
+        db.session.commit()
+        return partido
 

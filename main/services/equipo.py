@@ -1,6 +1,4 @@
-from main import repositories
 from main.repositories import EquipoRepositorio
-from main.models import EquipoModel
 
 repositorio = EquipoRepositorio()
 
@@ -22,3 +20,6 @@ class EquipoService:
         for key, value in data.items():
             equipo.__setattr__(key, value)
         return repositorio.update(objeto=equipo)
+
+    def obtener_puntaje_mas_alto(self):
+        return repositorio.max_puntaje()

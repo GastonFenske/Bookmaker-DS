@@ -1,7 +1,7 @@
 from .. import db
 from main.models import EmpresaModel
 from .repositoriobase import Create, Read, Update, Delete
-from main.map import EmpresaSchema, empresa_schema
+from main.map import EmpresaSchema
 
 empresa_schema = EmpresaSchema()
 

@@ -4,12 +4,21 @@ from .. import db
 
 
 class CuotaRepositorio(Read, Create):
-    def find_one(self, objeto):
-        cuota = db.session.query(CuotaModel).filter(CuotaModel.partido_id == objeto.partido)[0]
+
+    def __init__(self):
+        self.__modelo = CuotaModel
+    
+    @property
+    def modelo(self):
+        return self.__modelo
+
+    def find_one(self, id):
+        cuota = db.session.query(self.modelo).get(id)
         return cuota
 
     def find_all(self):
-        return super().find_all()
+        cuotas = db.session.query(self.modelo).all()
+        return cuotas
 
     def create(self, objeto):
         db.session.add(objeto)

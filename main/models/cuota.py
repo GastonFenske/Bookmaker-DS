@@ -4,9 +4,9 @@ from sqlalchemy.ext.hybrid import hybrid_property
 class Cuota(db.Model):
     __tablename__ = 'cuotas'
     __id = db.Column('id', db.Integer, primary_key=True)
-    __probabilidad_local = db.Column('local', db.Float, nullable=False)
-    __probabilidad_empate = db.Column('empate', db.Float, nullable=False)
-    __probabilidad_visitante = db.Column('visitante', db.Float, nullable=False)
+    __cuota_local = db.Column('local', db.Float, nullable=False)
+    __cuota_empate = db.Column('empate', db.Float, nullable=False)
+    __cuota_visitante = db.Column('visitante', db.Float, nullable=False)
     __partido_id = db.Column('partido_id', db.Integer, db.ForeignKey('partidos.id'), nullable=False)
     partido = db.relationship('Partido', back_populates='cuota')
     #__equipo_id = db.Column('equipo_id', db.Integer, db.ForeignKey('equipos.id'))
@@ -28,40 +28,40 @@ class Cuota(db.Model):
         del self.__id
 
     @hybrid_property
-    def probabilidad_local(self):
-        return self.__probabilidad_local
+    def cuota_local(self):
+        return self.__cuota_local
 
-    @probabilidad_local.setter
-    def probabilidad_local(self, probabilidad):
-        self.__probabilidad_local = probabilidad
+    @cuota_local.setter
+    def cuota_local(self, cuota):
+        self.__cuota_local = cuota
 
-    @probabilidad_local.deleter
-    def probabilidad_local(self):
-        del self.__probabilidad_local
-
-    @hybrid_property
-    def probabilidad_empate(self):
-        return self.__probabilidad_empate
-
-    @probabilidad_empate.setter
-    def probabilidad_empate(self, probabilidad):
-        self.__probabilidad_empate = probabilidad
-
-    @probabilidad_empate.deleter
-    def probabilidad_empate(self):
-        del self.__probabilidad_empate
+    @cuota_local.deleter
+    def cuota_local(self):
+        del self.__cuota_local
 
     @hybrid_property
-    def probabilidad_visitante(self):
-        return self.__probabilidad_visitante
+    def cuota_empate(self):
+        return self.__cuota_empate
 
-    @probabilidad_visitante.setter
-    def probabilidad_visitante(self, probabilidad):
-        self.__probabilidad_visitante = probabilidad
+    @cuota_empate.setter
+    def cuota_empate(self, cuota):
+        self.__cuota_empate = cuota
 
-    @probabilidad_visitante.deleter
-    def probabilidad_visitante(self):
-        del self.__probabilidad_visitante
+    @cuota_empate.deleter
+    def cuota_empate(self):
+        del self.__cuota_empate
+
+    @hybrid_property
+    def cuota_visitante(self):
+        return self.__cuota_visitante
+
+    @cuota_visitante.setter
+    def cuota_visitante(self, cuota):
+        self.__cuota_visitante = cuota
+
+    @cuota_visitante.deleter
+    def cuota_visitante(self):
+        del self.__cuota_visitante
 
     @hybrid_property
     def partido_id(self):

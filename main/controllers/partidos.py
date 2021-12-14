@@ -1,4 +1,3 @@
-from main import services
 from .. import db
 from flask_restful import Resource
 from main.models import PartidoModel
@@ -17,46 +16,30 @@ class Partido(Resource):
     def get(self, id):
         @validate_partido.validar_partido(id)
         def validated():
-            return partido_schema.dump(service.obtener_partido_by_id(id))
+            return partido_schema.dump(service.obtener_partido_por_id(id))
         return validated()
 
 
     def delete(self, id):
-        partido = db.session.query(PartidoModel).get_or_404(id)
-        try:
-            db.session.delete(partido)
-            db.session.commit()
-            return '', 204
-        except:
-            return '', 404
+        @validate_partido.validar_partido(id)
+        def validated():
+            return partido_schema.dump(service.eliminar_partido(id))
+        return validated()
 
     def put(self, id):
-        partido = db.session.query(PartidoSchema).get_or_404(id)
-        data = request.get_json().items()
-        for key, value in data:
-            setattr(partido, key, value)
-        try:
-            db.session.query(partido)
-            db.session.commit()
-            return partido_schema.dump(partido), 201
-        except:
-            return '', 404
+        @validate_partido.validar_partido(id)
+        def validated():
+            data = request.get_json()
+            return partido_schema.dump(service.actualizar_partido(id, data))
+        return validated()
 
 class Partidos(Resource):
 
     def get(self):
-        partidos = db.session.query(PartidoModel).all()
-        return partido_schema.dump(partidos, many=True)
+        return partido_schema.dump(service.obtener_partidos(), many=True)
 
-    # def post(self):
-    #     partido = partido_schema.load(request.get_json())
-    #     db.session.add(partido)
-    #     db.session.commit()
-    #     return partido_schema.dump(partido), 201
 
     def post(self):
-        """"""
-        services = PartidoService()
         partido = partido_schema.load(request.get_json())
-        return services.agregar_partido(partido)
+        return partido_schema.dump(service.agregar_partido(partido))
 

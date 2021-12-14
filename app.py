@@ -4,10 +4,13 @@ from faker import Faker
 from main.models import ClienteModel, EquipoModel, CuotaModel, PartidoModel
 import datetime as dt
 import csv
-from main.controllers.cuota import aplicar_probabilidades
-from main.map.couta_schema import CuotaSchema
+# from main.controllers.cuota import aplicar_probabilidades
+from main.services import CuotaService
+from main.map import CuotaSchema
+
 
 cuota_schema = CuotaSchema()
+service_cuota = CuotaService()
 
 app = create_app()
 
@@ -56,7 +59,8 @@ def load_cuotas():
             "partido_id": partido.id
         }
         cuota = cuota_schema.load(json)
-        aplicar_probabilidades(cuota)
+        # aplicar_probabilidades(cuota)
+        service_cuota.aplicar_cuotas(cuota)
         db.session.add(cuota)
         db.session.commit()
 

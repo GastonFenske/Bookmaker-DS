@@ -1,6 +1,7 @@
 from .. import db
 from main.models import EquipoModel
 from .repositoriobase import Create, Read, Update, Delete
+from sqlalchemy.sql.expression import func
 
 class EquipoRepositorio(Create, Read, Update, Delete):
 
@@ -37,3 +38,10 @@ class EquipoRepositorio(Create, Read, Update, Delete):
     def __soft_delete(self, objeto):
         objeto.activado = False
         return self.update(objeto)
+
+    def __max_puntaje(self):
+        puntaje = db.session.query(func.max(self.modelo.puntaje)).one()
+        return puntaje[0]
+
+    def max_puntaje(self):
+        return self.__max_puntaje()
