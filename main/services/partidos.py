@@ -3,8 +3,14 @@
 from main.repositories import PartidoRepositorio
 from main.map import PartidoSchema
 from .decorators import validar_equipo
+# from .cuota import CuotaService
+# from main.services import CuotaService
+# from . import CuotaService
+# from main.services.cuota import CuotaService
+# from .cuota import CuotaService
 
 
+# from .cuota import CuotaService
 partido_schema =PartidoSchema()
 partido_repositorio = PartidoRepositorio()
 
@@ -34,8 +40,4 @@ class PartidoService:
 
 
     def agregar_partido(self, partido):
-        @validar_equipo(partido.equipo_local_id)
-        @validar_equipo(partido.equipo_visitante_id)
-        def guardar_partido():
-            return partido_schema.dump(partido_repositorio.create(partido))
-        return guardar_partido()
+            return partido_repositorio.create(partido)

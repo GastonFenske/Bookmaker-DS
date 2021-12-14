@@ -21,7 +21,7 @@ class Apuestas(Resource):
         apuesta = apuesta_schema.load(request.get_json())
         @validate_apuesta.validar_apuesta(apuesta)
         def validate_post():
-            return apuesta_service.agregar_apuesta(apuesta)
+            return apuesta_schema.dump(apuesta_service.agregar_apuesta(apuesta))
             # return services.registrar_apuestas(apuesta)
         return validate_post()
 

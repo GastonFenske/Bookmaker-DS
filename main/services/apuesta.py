@@ -14,7 +14,7 @@ class ApuestaService:
         cuota = cuota_repositorio.find_by_partido(apuesta)
         probabilidad = self.set_cuota(apuesta, cuota)
         apuesta.ganancia = round(apuesta.monto * probabilidad, 2)
-        return apuesta_schema.dump(apuesta_repositorio.create(apuesta))
+        return apuesta_repositorio.create(apuesta)
 
     def set_cuota(self, objeto, cuota):
         if validate_partido.validar_partido_local(objeto):

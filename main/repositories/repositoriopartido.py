@@ -35,11 +35,11 @@ class PartidoRepositorio(Create, Read, Delete, Update):
         db.session.add(objeto)
         db.session.commit()
         #Aca vamos a crear la cuota automaticamente
-        json = {
-            "partido_id": objeto.id
-        }
-        cuota = cuota_schema.load(json)
-        # aplicar_probabilidades(cuota)
+        # json = {
+        #     "partido_id": objeto.id
+        # }
+        # cuota = cuota_schema.load(json)
+        # # aplicar_probabilidades(cuota)
         return objeto
 
     def update(self, objeto):

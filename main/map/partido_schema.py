@@ -6,6 +6,7 @@ from .equipo_schema import EquipoSchema
 
 class PartidoSchema(Schema):
     id = fields.Int(dump_only=True)
+    # fecha = fields.DateTime(required=False)
     fecha = fields.DateTime(required=False)
     equipo_local_id = fields.Int(required=True)
     equipo_visitante_id = fields.Int(required=True)

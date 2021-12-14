@@ -1,8 +1,13 @@
 from main.repositories import CuotaRepositorio
 from .partidos import PartidoService
+# from main.services import PartidoService
+# from . import PartidoService
+# from main.services.partidos import PartidoService
 from .equipo import EquipoService
 from math import cos
 
+
+# from .partidos import PartidoService
 repositorio = CuotaRepositorio()
 partido_service = PartidoService()
 equipo_service = EquipoService()

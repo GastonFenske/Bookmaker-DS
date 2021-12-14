@@ -6,6 +6,7 @@ from main.map import PartidoSchema
 from main.repositories import PartidoRepositorio
 from main.services import PartidoService
 from main.validate import ValidatePartido
+from main.services.decorators import validar_equipo, validar_equipo_pro
 
 partido_schema = PartidoSchema()
 partido_repositorio = PartidoRepositorio()
@@ -41,5 +42,8 @@ class Partidos(Resource):
 
     def post(self):
         partido = partido_schema.load(request.get_json())
-        return partido_schema.dump(service.agregar_partido(partido))
+        @validar_equipo_pro(partido.equipo_local_id, partido.equipo_visitante_id)
+        def validated():
+            return partido_schema.dump(service.agregar_partido(partido))
+        return validated()
 

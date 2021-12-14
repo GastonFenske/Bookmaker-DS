@@ -1,11 +1,12 @@
 from .. import db
 from sqlalchemy.ext.hybrid import hybrid_property
-import datetime as dt
+from datetime import datetime
 
 class Partido(db.Model):
     __tablename__ = 'partidos'
     __id = db.Column('id', db.Integer, primary_key=True)
-    __fecha = db.Column('fecha', db.DateTime, nullable=False, default=dt.datetime.now())
+    __fecha = db.Column('fecha', db.DateTime, default=datetime.now(), nullable=False)
+    # __fecha = db.Column('fecha', db.DateTime, default=datetime.now(), nullable=False)
     __equipo_local_id = db.Column('equipo_local', db.Integer, db.ForeignKey('equipos.id'), nullable=False)
     equipo_local = db.relationship('Equipo',foreign_keys=[__equipo_local_id])
     __equipo_visitante_id = db.Column('equipo_visistante', db.Integer, db.ForeignKey('equipos.id'), nullable=False)
@@ -35,7 +36,7 @@ class Partido(db.Model):
         self.__fecha = fecha
     @fecha.deleter
     def fecha(self):
-        del self.__fecha
+        del self.__fecha  
     
     @hybrid_property
     def equipo_local_id(self):
