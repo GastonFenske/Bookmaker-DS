@@ -1,13 +1,13 @@
-# from .validate_equipo import ValidateEquipo
-# from .validate_partido import ValidatePartido
-# from .validate_cliente import ValidateCliente
+from .validate_equipo import ValidateEquipo
+from .validate_partido import ValidatePartido
+from .validate_cliente import ValidateCliente
 from main.models import ApuestaModel
 from .. import db
 # from main.services.apuesta import ApuestaService
 
-# validate_equipo = ValidateEquipo()
-# validate_partido = ValidatePartido()
-# validate_cliente = ValidateCliente()
+validate_equipo = ValidateEquipo()
+validate_partido = ValidatePartido()
+validate_cliente = ValidateCliente()
 
 #Strategy, un decorador mas general o algo ase
 class ValidateApuesta():
