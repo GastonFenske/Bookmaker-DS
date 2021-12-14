@@ -11,39 +11,39 @@ validate_partido = ValidatePartido()
 class ApuestaService:
 
     def agregar_apuesta(self, apuesta):
-        cuota = cuota_repositorio.find_one(apuesta)
-        probabilidad = self.set_probabilidad(apuesta, cuota)
+        cuota = cuota_repositorio.find_by_partido(apuesta)
+        probabilidad = self.set_cuota(apuesta, cuota)
         apuesta.ganancia = round(apuesta.monto * probabilidad, 2)
         return apuesta_schema.dump(apuesta_repositorio.create(apuesta))
 
-    def set_probabilidad(self, objeto, cuota):
+    def set_cuota(self, objeto, cuota):
         if validate_partido.validar_partido_local(objeto):
-            probabilidad_local = ProbabilidadLocal()
-            probabilidad = probabilidad_local.calcular_probabilidad(cuota)
+            cuota_local = CuotaLocal()
+            probabilidad = cuota_local.calcular_cuota(cuota)
             return probabilidad
         if validate_partido.validar_partido_visitante(objeto):
-            probabilidad_visitante = ProbabilidadVisitante()
-            probabilidad = probabilidad_visitante.calcular_probabilidad(cuota)
+            cuota_visitante = CuotaVisitante()
+            probabilidad = cuota_visitante.calcular_cuota(cuota)
             return probabilidad
-        probabilidad_empate = ProbabilidadEmpate()
-        probabilidad = probabilidad_empate.calcular_probabilidad(cuota)
+        cuota_empate = CuotaEmpate()
+        probabilidad = cuota_empate.calcular_cuota(cuota)
         return probabilidad
 
-class ProbabilidadStrategy(ABC):
-    def calcular_probabilidad(self, cuota):
+class CuotaStrategy(ABC):
+    def calcular_cuota(self, cuota):
         """Calcular probabilidad"""
 
-class ProbabilidadLocal(ProbabilidadStrategy):
-    def calcular_probabilidad(self, cuota):
-        probabilidad = cuota.probabilidad_local
+class CuotaLocal(CuotaStrategy):
+    def calcular_cuota(self, cuota):
+        probabilidad = cuota.cuota_local
         return probabilidad
 
-class ProbabilidadVisitante(ProbabilidadStrategy):
-    def calcular_probabilidad(self, cuota):
-        probabilidad = cuota.probabilidad_visitante
+class CuotaVisitante(CuotaStrategy):
+    def calcular_cuota(self, cuota):
+        probabilidad = cuota.cuota_visitante
         return probabilidad
 
-class ProbabilidadEmpate(ProbabilidadStrategy):
-    def calcular_probabilidad(self, cuota):
-        probabilidad = cuota.probabilidad_empate
+class CuotaEmpate(CuotaStrategy):
+    def calcular_cuota(self, cuota):
+        probabilidad = cuota.cuota_empate
         return probabilidad

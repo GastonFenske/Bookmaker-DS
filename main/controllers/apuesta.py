@@ -11,6 +11,7 @@ apuesta_service = ApuestaService()
 validate_apuesta = ValidateApuesta()
 
 class Apuesta(Resource):
+    #Falta validar que la apuesta exista
     def get(self, id):
         return apuesta_schema.dump(repositorio_apuesta.find_one(id))
         #return PartidoService.obtener_partidos_no_finalizados()
