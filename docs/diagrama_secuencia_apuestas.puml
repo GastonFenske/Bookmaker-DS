@@ -10,10 +10,10 @@ database data
 
 Cliente -> ApuestaController: GET all
 activate ApuestaController
-ApuestaController -> PartidoModel: get all partidos finalizados
+ApuestaController -> PartidoModel: get all partidos 
 activate PartidoModel
 PartidoModel -> data: select all
-PartidoModel <- data: registros partidos finalizados
+PartidoModel <- data: registro partidos 
 PartidoSchema <- PartidoModel: dump many=True
 deactivate PartidoModel
 activate PartidoSchema
@@ -33,6 +33,20 @@ deactivate ApuestaModel
 activate ApuestaSchema
 ApuestaSchema -> ApuestaController: Json
 deactivate ApuestaSchema
+Cliente <- ApuestaController: Json
+deactivate ApuestaController
+
+Cliente -> ApuestaController: GET all apuestas ganadas
+activate ApuestaController
+ApuestaController -> PartidoModel: get all partidos ganados
+activate PartidoModel
+PartidoModel -> data: select all
+PartidoModel <- data: registro partidos 
+PartidoSchema <- PartidoModel: dump many=True
+deactivate PartidoModel
+activate PartidoSchema
+PartidoSchema -> ApuestaController: collection Json
+deactivate PartidoSchema
 Cliente <- ApuestaController: Json
 deactivate ApuestaController
 

@@ -1,6 +1,5 @@
 from flask_restful import Resource
 from flask import request
-from main import repositories
 from main.services import ApuestaService
 from main.map import ApuestaSchema
 from main.repositories import ApuestaRepositorio

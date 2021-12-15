@@ -1,8 +1,6 @@
 from .partidos import PartidoService
 from .empresa import EmpresaService
-from .command import Command, Tarea
 from .apuesta import ApuestaService
 from .equipo import EquipoService
 from .cuota import CuotaService
 from .cliente import ClienteService
-# from .decorators import singleton 

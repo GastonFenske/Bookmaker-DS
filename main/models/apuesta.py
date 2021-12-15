@@ -8,16 +8,12 @@ class Apuesta(db.Model):
     __fecha = db.Column('fecha', db.DateTime, default=datetime.now(), nullable=False)
     __monto = db.Column('monto', db.Float, nullable=False)
     __equipo_ganador_id = db.Column('equipo_ganador_id', db.ForeignKey('equipos.id'), nullable=True)
-    equipo_ganador = db.relationship('Equipo', back_populates='apuestas')
-
     __partido_id = db.Column('partido', db.Integer, db.ForeignKey('partidos.id'), nullable=False)
-    partido = db.relationship('Partido', back_populates='apuestas')
-
     __cliente_id = db.Column('cliente', db.Integer, db.ForeignKey('clientes.id'), nullable=False)
-    cliente = db.relationship('Cliente', back_populates='apuestas')
-
-    # ganador = db.relation_ship('Partido', back_populates=)
     __ganancia = db.Column('ganacia', db.Float, nullable=False)
+    partido = db.relationship('Partido', back_populates='apuestas')
+    cliente = db.relationship('Cliente', back_populates='apuestas')
+    equipo_ganador = db.relationship('Equipo', back_populates='apuestas')
 
 
     @hybrid_property

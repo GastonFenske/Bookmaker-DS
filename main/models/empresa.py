@@ -9,7 +9,6 @@ class Empresa(db.Model):
     __activado = db.Column('activado', db.Boolean, default=True, nullable=False)
 
 
-
     @hybrid_property
     def id(self):
         return self.__id
@@ -55,6 +54,3 @@ class Empresa(db.Model):
     @activado.deleter
     def activado(self):
         del self.__activado
-
-
-    

@@ -35,8 +35,6 @@ class ClienteRepositorio(Create, Read, Delete, Update):
 
     def delete(self, id):
         objeto = db.session.query(self.modelo).get(id)
-        #db.session.delete(objeto)
-        #db.session.commit()
         self.soft_delete(objeto, id)
 
     def __soft_delete(self, objeto, id):

@@ -1,13 +1,8 @@
 from main.repositories.repositoriocuota import CuotaRepositorio
 from main.services.partidos import PartidoService
-# from main.services import PartidoService
-# from . import PartidoService
-# from main.services.partidos import PartidoService
 from main.services.equipo import EquipoService
 from math import cos
 
-
-# from .partidos import PartidoService
 repositorio = CuotaRepositorio()
 partido_service = PartidoService()
 equipo_service = EquipoService()
@@ -28,12 +23,11 @@ class CuotaService:
         partido = partido_service.obtener_partido_por_id(cuota.partido_id)
         visitante = equipo_service.obtener_equipo_por_id(partido.equipo_visitante_id)
         local = equipo_service.obtener_equipo_por_id(partido.equipo_local_id)
-
+        
         cuota.cuota_local = self.calcular_cuota(local.puntaje)
         cuota.cuota_visitante = self.calcular_cuota(visitante.puntaje)
         cuota.cuota_empate = self.calcular_cuota(self.calcular_empate(local.puntaje, visitante.puntaje))
 
-    #Strategy para calcular
     def calcular_base(self):
         return equipo_service.obtener_puntaje_mas_alto()
     

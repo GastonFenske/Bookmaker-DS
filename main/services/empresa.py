@@ -1,5 +1,4 @@
 from main.repositories import EmpresaRepositorio
-from main.models import EmpresaModel
 
 repositorio = EmpresaRepositorio()
 
@@ -11,7 +10,6 @@ class EmpresaService:
         return repositorio.find_one(id)
 
     def create_empresa(self, objeto):
-        """"""
         return repositorio.create(objeto)
 
         

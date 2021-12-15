@@ -27,7 +27,6 @@ class EquipoService:
     def obtener_puntaje_mas_alto(self):
         return repositorio.max_puntaje()
 
-    #Patron
     def verificar_equipo_local(self, objeto):
         return repositorio.verify_equipo_local(objeto)
     

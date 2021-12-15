@@ -1,22 +1,16 @@
-from marshmallow import Schema, fields, validate, post_load, post_dump
-from main.models import PartidoModel, EquipoModel
-# from .couta_schema import CuotaSchema
+from marshmallow import Schema, fields, post_load, post_dump
+from main.models import PartidoModel
 from .equipo_schema import EquipoSchema
-from .cliente_schema import ClienteSchema
 
 
 class PartidoSchema(Schema):
     id = fields.Int(dump_only=True)
-    # fecha = fields.DateTime(required=False)
     fecha = fields.DateTime(required=False)
     equipo_local_id = fields.Int(required=True)
     equipo_visitante_id = fields.Int(required=True)
     finalizado = fields.Boolean(required=False)
     ganador_id = fields.Int(required=False)
     ganador = fields.Nested(EquipoSchema)
-    # goles_local = fields.Int(required=True)
-    # goles_visitante = fields.Int(required=True)
-    # partido = fields.Nested(CuotaSchema)
     equipo_local = fields.Nested(EquipoSchema)
     equipo_visitante = fields.Nested(EquipoSchema)
 

@@ -4,12 +4,15 @@ class Cliente {
     - nombre: String
     - apellido
     - email 
+    - activado: Boolean
+    - apuestas
 }
 
 class Empresa {
     - id
     - razon_social
     - email
+    - activado: Boolean
 }
 
 class Equipo {
@@ -17,12 +20,19 @@ class Equipo {
     - nombre
     - escudo
     - pais 
+    - puntaje 
+    - apuestas
+    - activado: Boolean
 }
 
 class Apuesta {
     - id 
     - monto
-    - monto_minimo
+    - fecha
+    - equipo_ganador_id
+    - partido_id
+    - cliente_id
+    - ganancia 
 }
 
 class Partido {
@@ -30,6 +40,8 @@ class Partido {
     - fecha 
     - equipo_local
     - equipo_visitante
+    - finalizado 
+    - equipo_ganador_id
 }
 
 Equipo --* Partido: equipo local
@@ -46,3 +58,4 @@ Apuesta --> Partido: se realiza sobre
 
 
 @enduml
+

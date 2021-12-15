@@ -6,7 +6,6 @@ from operator import or_
 
 class EquipoRepositorio(Create, Read, Update, Delete):
 
-    #Se le podria asignar un atributo privado para el PartidoModel
     def __init__(self):
         self.__modelo = EquipoModel
     
@@ -52,7 +51,6 @@ class EquipoRepositorio(Create, Read, Update, Delete):
     def max_puntaje(self):
         return self.__max_puntaje()
 
-    #Aca se podria aplicar algun patron
     def verify_equipo_local(self, objeto):
         equipo_local = db.session.query(PartidoModel).filter((PartidoModel.equipo_local_id == objeto.equipo_ganador_id) & (PartidoModel.id == objeto.partido_id)).count()
         return True if equipo_local != 0 else False

@@ -32,8 +32,6 @@ class EmpresaRepositorio(Create, Read, Update, Delete):
 
     def delete(self, id):
         objeto = db.session.query(self.modelo).get_or_404(id)
-        # db.session.delete(objeto)
-        # db.session.commit()
         self.__soft_delete(objeto, id)
 
     def __soft_delete(self, objeto):

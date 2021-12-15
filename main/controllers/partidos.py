@@ -1,12 +1,10 @@
 from .. import db
 from flask_restful import Resource
-from main.models import PartidoModel
-from flask import request, jsonify
+from flask import request
 from main.map import PartidoSchema
 from main.repositories import PartidoRepositorio
 from main.services import PartidoService
 from main.validate import ValidatePartido
-from main.services.decorators import validar_equipo, validar_equipo_pro
 from main.validate import ValidateEquipo
 
 partido_schema = PartidoSchema()

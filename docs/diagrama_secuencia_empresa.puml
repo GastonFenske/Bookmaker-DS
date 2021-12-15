@@ -6,7 +6,7 @@ participant ClienteSchema
 entity ClienteModel
 database data
 
-Admin -> ClienteController: GET by Id (Request)
+Admin -> ClienteController: GET (Request)
 activate ClienteController
 ClienteController -> ClienteModel: get_or_404()
 activate ClienteModel

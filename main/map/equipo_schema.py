@@ -1,4 +1,4 @@
-from marshmallow import Schema, fields, validate, post_load, post_dump
+from marshmallow import Schema, fields, post_load, post_dump
 from main.models import EquipoModel
 
 class EquipoSchema(Schema):

@@ -14,7 +14,6 @@ validate_equipo = ValidateEquipo()
 class Equipos(Resource):
 
     def get(self):
-        #Aca podriamos filtrar por pais o algun otro tipo de filtrado
         return equipo_schema.dump(equipo_service.obtener_equipos(), many=True)
 
     def post(self):
@@ -29,8 +28,6 @@ class Equipo(Resource):
             return equipo_schema.dump(equipo_service.obtener_equipo_por_id(id))
         return validated()
 
-    #Esto quizas se puede mejorar con lamda functions
-    #Mejorar esto con lamda functions
     def delete(self, id):
         @validate_equipo.validar_equipos(id)
         def validated():

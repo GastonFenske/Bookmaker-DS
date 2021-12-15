@@ -9,11 +9,6 @@ class Cuota(db.Model):
     __cuota_visitante = db.Column('visitante', db.Float, nullable=False)
     __partido_id = db.Column('partido_id', db.Integer, db.ForeignKey('partidos.id'), nullable=False)
     partido = db.relationship('Partido', back_populates='cuota')
-    #__equipo_id = db.Column('equipo_id', db.Integer, db.ForeignKey('equipos.id'))
-    #equipo = db.relationship('Equipo', back_populates='cuota')
-
-    # def __repr__(self) -> str:
-    #     return f'({self.probabilidad_empate, self.probabilidad_local, self.probabilidad_visitante})'
 
     @hybrid_property
     def id(self):
@@ -72,13 +67,3 @@ class Cuota(db.Model):
     @partido_id.deleter
     def partido_id(self):
         del self.__partido_id
-
-    #@hybrid_property
-    #def equipo_id(self):
-    #    return self.__equipo_id
-    #@equipo_id.setter
-    #def equipo_id(self, id):
-    #    self.__equipo_id = id
-    #@equipo_id.deleter
-    #def equipo_id(self):
-    #    del self.__equipo_id

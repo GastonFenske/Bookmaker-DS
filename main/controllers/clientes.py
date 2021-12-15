@@ -1,7 +1,7 @@
 from .. import db
 from flask_restful import Resource
 from main.models import ClienteModel
-from flask import request, jsonify
+from flask import request
 from main.map import ClienteSchema, ClienteFilters
 
 cliente_schema = ClienteSchema()
