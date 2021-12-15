@@ -8,7 +8,7 @@ from main.validate import ValidateApuesta, ValidatePartido, validate_partido
 
 apuesta_schema = ApuestaSchema()
 repositorio_apuesta = ApuestaRepositorio()
-apuesta_service = ApuestaService()
+service = ApuestaService()
 validate_apuesta = ValidateApuesta()
 validate_partido = ValidatePartido()
 
@@ -16,7 +16,7 @@ class Apuesta(Resource):
     def get(self, id):
         @validate_apuesta.validar_apuesta_existe(id)
         def validated():
-            return apuesta_schema.dump(repositorio_apuesta.find_one(id))
+            return apuesta_schema.dump(service.obtener_apuesta_por_id(id))
         return validated()
 
 
@@ -27,7 +27,7 @@ class Apuestas(Resource):
         def validate_post():
             local = validate_partido.validar_partido_local(apuesta)
             visitante = validate_partido.validar_partido_visitante(apuesta)
-            return apuesta_schema.dump(apuesta_service.agregar_apuesta(apuesta, local=local, visitante=visitante))
+            return apuesta_schema.dump(service.agregar_apuesta(apuesta, local=local, visitante=visitante))
         return validate_post()
 
     def get(self):

@@ -1,24 +1,19 @@
 from .validate_equipo import ValidateEquipo
 from .validate_partido import ValidatePartido
 from .validate_cliente import ValidateCliente
-from main.models import ApuestaModel
-from .. import db
 from main.services.apuesta import ApuestaService
 
 validate_equipo = ValidateEquipo()
 validate_partido = ValidatePartido()
 validate_cliente = ValidateCliente()
 
+service = ApuestaService()
+
 #Strategy, un decorador mas general o algo ase
 class ValidateApuesta():
 
     def __init__(self):
         self.__monto_minimo = 20.0
-        self.__modelo = ApuestaModel
-    
-    @property
-    def modelo(self):
-        return self.__modelo
 
     @property
     def monto_minimo(self):
@@ -29,7 +24,7 @@ class ValidateApuesta():
             def wrapper(*args, **kwargs):
                 if monto >= self.monto_minimo:
                     return function(*args, **kwargs)
-                return 'Monto por abajo del minimo para apostar', 409
+                return f'Monto minimo para apostar: ${self.monto_minimo}', 409
             return wrapper
         return decorator
 
@@ -50,7 +45,7 @@ class ValidateApuesta():
     def validar_apuesta_existe(self, id):
         def decorator(function):
             def wrapper(*args, **kwargs):
-                apuesta = db.session.query(self.modelo).get(id)
+                apuesta = service.obtener_apuesta_por_id(id)
                 if apuesta:
                     return function(*args, **kwargs)
                 return 'Apuesta no encontrada', 404

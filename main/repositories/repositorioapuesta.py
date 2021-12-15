@@ -19,7 +19,7 @@ class ApuestaRepositorio(Create, Read):
         return self.__modelo
 
     def find_one(self, id):
-        objeto = db.session.query(self.modelo).get_or_404(id)
+        objeto = db.session.query(self.modelo).get(id)
         return objeto
 
     def find_wins(self):

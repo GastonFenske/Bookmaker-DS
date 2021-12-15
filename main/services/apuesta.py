@@ -32,6 +32,9 @@ class ApuestaService:
         probabilidad = cuota_empate.calcular_cuota(cuota)
         return probabilidad
 
+    def obtener_apuesta_por_id(self, id):
+        return apuesta_repositorio.find_one(id)
+
 class CuotaStrategy(ABC):
     def calcular_cuota(self, cuota):
         """Calcular probabilidad"""
