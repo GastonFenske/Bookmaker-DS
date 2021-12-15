@@ -37,6 +37,8 @@ def create_app():
     api.add_resource(controllers.ApuestasController, '/apuestas')
     api.add_resource(controllers.CuotaController, '/cuota/<id>')
     api.add_resource(controllers.CuotasController, '/cuotas')
+    api.add_resource(controllers.ApuestaGanadaController, '/apuesta-ganada/<id>')
+    api.add_resource(controllers.ApuestasGanadasController, '/apuestas-ganadas')
 
     api.init_app(app)
 

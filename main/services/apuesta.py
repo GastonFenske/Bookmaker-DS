@@ -2,12 +2,10 @@ from main.map import ApuestaSchema
 from main.repositories.repositorioapuesta import ApuestaRepositorio 
 from main.repositories.repositoriocuota import CuotaRepositorio
 from abc import ABC
-# from main.validate.validate_partido import ValidatePartido
 
 apuesta_schema = ApuestaSchema()
 apuesta_repositorio = ApuestaRepositorio()
 cuota_repositorio = CuotaRepositorio()
-# validate_partido = ValidatePartido()
 
 class ApuestaService:
 
@@ -18,12 +16,10 @@ class ApuestaService:
         return apuesta_repositorio.create(apuesta)
 
     def set_cuota(self, cuota, local, visitante):
-        # if validate_partido.validar_partido_local(objeto):
         if local:
             cuota_local = CuotaLocal()
             probabilidad = cuota_local.calcular_cuota(cuota)
             return probabilidad
-        # if validate_partido.validar_partido_visitante(objeto):
         if visitante:
             cuota_visitante = CuotaVisitante()
             probabilidad = cuota_visitante.calcular_cuota(cuota)
@@ -34,6 +30,12 @@ class ApuestaService:
 
     def obtener_apuesta_por_id(self, id):
         return apuesta_repositorio.find_one(id)
+
+    def obtener_apuestas_ganadas(self):
+        return apuesta_repositorio.find_wins()
+
+    def obtener_apuestas(self):
+        return apuesta_repositorio.find_all()
 
 class CuotaStrategy(ABC):
     def calcular_cuota(self, cuota):

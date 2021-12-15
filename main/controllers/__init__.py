@@ -11,3 +11,5 @@ from .apuesta import Apuesta as ApuestaController
 from .apuesta import Apuestas as ApuestasController
 from .cuota import Cuota as CuotaController
 from .cuota import Cuotas as CuotasController
+from .apuesta import ApuestasGanadas as ApuestasGanadasController
+from .apuesta import ApuestaGanada as ApuestaGanadaController

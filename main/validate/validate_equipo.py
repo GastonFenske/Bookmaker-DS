@@ -1,22 +1,15 @@
-from main.models import EquipoModel, PartidoModel
-from .. import db
-from operator import or_
+from main.services.equipo import EquipoService
+
+service = EquipoService()
 
 class ValidateEquipo():
-
-    def __init__(self):
-        self.__modelo = EquipoModel
-    
-    @property
-    def modelo(self):
-        return self.__modelo
 
     def validar_equipos(self, *ids):
         """Decorador para validar mas de un equipo"""
         def decorator(function):
             def wrapper(*args, **kwargs):
                 for id in ids:
-                    equipo = db.session.query(self.modelo).get(id)
+                    equipo = service.obtener_equipo_por_id(id)
                     if not equipo:
                         return f'El equipo con el id: {id} no ha sido encontrado', 404
                         break
@@ -27,7 +20,7 @@ class ValidateEquipo():
     def validar_equipo(self, objeto):
         def decorator(function):
             def wrapper(*args, **kwargs):
-                equipos = db.session.query(EquipoModel).filter(or_(EquipoModel.id == PartidoModel.equipo_local_id, EquipoModel.id == PartidoModel.equipo_visitante_id) & (PartidoModel.id == objeto.partido_id)).all()
+                equipos = service.obtener_equipos_de_un_partido(objeto)
                 equipos = [e.id for e in equipos]
                 if objeto.equipo_ganador_id in equipos or objeto.equipo_ganador_id == None:
                     return function(*args, **kwargs)

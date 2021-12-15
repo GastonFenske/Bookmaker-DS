@@ -45,7 +45,7 @@ class Partidos(Resource):
 
     def post(self):
         partido = partido_schema.load(request.get_json())
-        @validate_equipo.validar_equipo(partido.equipo_local_id, partido.equipo_visitante_id)
+        @validate_equipo.validar_equipos(partido.equipo_local_id, partido.equipo_visitante_id)
         def validated():
             return partido_schema.dump(service.agregar_partido(partido))
         return validated()

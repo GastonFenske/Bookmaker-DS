@@ -12,7 +12,8 @@ class Partido(db.Model):
     __equipo_visitante_id = db.Column('equipo_visistante', db.Integer, db.ForeignKey('equipos.id'), nullable=False)
     equipo_visitante = db.relationship('Equipo', foreign_keys=[__equipo_visitante_id])
     __finalizado = db.Column('finalizado', db.Boolean, default=False)
-    __ganador = db.Column('ganador', db.Integer, default=None, nullable=True)
+    __ganador_id = db.Column('ganador', db.Integer, db.ForeignKey('equipos.id'), default=None, nullable=True)
+    ganador = db.relationship('Equipo', foreign_keys=[__ganador_id])
     # __goles_local = db.Column('goles_local', db.Integer, nullable=False)
     # __goles_visitante = db.Column('goles_visitante', db.Integer, nullable=False)
     cuota = db.relationship('Cuota', back_populates='partido', uselist=False)
@@ -70,14 +71,14 @@ class Partido(db.Model):
         del self.__finalizado
 
     @hybrid_property
-    def ganador(self):
-        return self.__ganador
-    @ganador.setter
-    def ganador(self, ganador):
-        self.__ganador = ganador
-    @ganador.deleter
-    def ganador(self):
-        del self.__ganador
+    def ganador_id(self):
+        return self.__ganador_id
+    @ganador_id.setter
+    def ganador_id(self, ganador_id):
+        self.__ganador_id = ganador_id
+    @ganador_id.deleter
+    def ganador_id(self):
+        del self.__ganador_id
 
     # @hybrid_property
     # def goles_local(self):

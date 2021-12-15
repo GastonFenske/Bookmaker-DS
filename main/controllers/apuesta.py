@@ -31,4 +31,12 @@ class Apuestas(Resource):
         return validate_post()
 
     def get(self):
-        return apuesta_schema.dump(repositorio_apuesta.find_wins(), many=True)        
+        return apuesta_schema.dump(service.obtener_apuestas(), many=True)   
+
+class ApuestasGanadas(Resource):
+    def get(self):
+        print('Entra')
+        return apuesta_schema.dump(service.obtener_apuestas_ganadas(), many=True)
+
+class ApuestaGanada(Resource):
+    pass

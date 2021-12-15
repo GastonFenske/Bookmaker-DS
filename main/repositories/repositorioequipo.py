@@ -1,10 +1,12 @@
 from .. import db
-from main.models import EquipoModel
+from main.models import EquipoModel, PartidoModel
 from main.repositories.repositoriobase import Create, Read, Update, Delete
 from sqlalchemy.sql.expression import func
+from operator import or_
 
 class EquipoRepositorio(Create, Read, Update, Delete):
 
+    #Se le podria asignar un atributo privado para el PartidoModel
     def __init__(self):
         self.__modelo = EquipoModel
     
@@ -33,6 +35,10 @@ class EquipoRepositorio(Create, Read, Update, Delete):
         db.session.add(objeto)
         db.session.commit()
         return objeto
+
+    def find_from_partido(self, objeto):
+        equipos = db.session.query(self.modelo).filter(or_(self.modelo.id == PartidoModel.equipo_local_id, self.modelo.id == PartidoModel.equipo_visitante_id) & (PartidoModel.id == objeto.partido_id)).all()
+        return equipos
 
 
     def __soft_delete(self, objeto):

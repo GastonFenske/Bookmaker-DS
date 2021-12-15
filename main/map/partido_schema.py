@@ -2,6 +2,7 @@ from marshmallow import Schema, fields, validate, post_load, post_dump
 from main.models import PartidoModel, EquipoModel
 # from .couta_schema import CuotaSchema
 from .equipo_schema import EquipoSchema
+from .cliente_schema import ClienteSchema
 
 
 class PartidoSchema(Schema):
@@ -11,7 +12,8 @@ class PartidoSchema(Schema):
     equipo_local_id = fields.Int(required=True)
     equipo_visitante_id = fields.Int(required=True)
     finalizado = fields.Boolean(required=False)
-    ganador = fields.Int(required=False)
+    ganador_id = fields.Int(required=False)
+    ganador = fields.Nested(EquipoSchema)
     # goles_local = fields.Int(required=True)
     # goles_visitante = fields.Int(required=True)
     # partido = fields.Nested(CuotaSchema)
@@ -22,7 +24,7 @@ class PartidoSchema(Schema):
     def make_partido(self, data, **kwargs):
         return PartidoModel(**data)
 
-    SKIP_VALUES = ['equipo_local_id', 'equipo_visitante_id']
+    SKIP_VALUES = ['equipo_local_id', 'equipo_visitante_id', 'ganador_id']
     @post_dump
     def remove_skip_values(self, data, **kwargs):
         return {

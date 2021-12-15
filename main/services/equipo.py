@@ -6,6 +6,9 @@ class EquipoService:
     def obtener_equipos(self):
         return repositorio.find_all()
 
+    def obtener_equipos_de_un_partido(self, objeto):
+        return repositorio.find_from_partido(objeto)
+
     def obtener_equipo_por_id(self, id):
         return repositorio.find_one(id)
 

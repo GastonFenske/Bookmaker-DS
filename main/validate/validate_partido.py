@@ -1,5 +1,8 @@
 from main.models import PartidoModel
 from .. import db
+from main.services.partidos import PartidoService
+
+service = PartidoService()
 
 class ValidatePartido():
     pass

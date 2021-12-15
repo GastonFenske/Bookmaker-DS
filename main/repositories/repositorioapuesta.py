@@ -23,12 +23,12 @@ class ApuestaRepositorio(Create, Read):
         return objeto
 
     def find_wins(self):
-        objetos = db.session.query(self.modelo).filter(or_(self.modelo.equipo_ganador_id == PartidoModel.ganador, self.modelo.equipo_ganador_id == None) & (PartidoModel.finalizado == True))
+        objetos = db.session.query(self.modelo).filter(or_(self.modelo.equipo_ganador_id == PartidoModel.ganador_id, self.modelo.equipo_ganador_id == None) & (PartidoModel.finalizado == True))
         if request.get_json():
             filters = request.get_json().items()
             for key, value in filters:
-                if key == 'cliente':
-                    objetos = objetos.filter(self.modelo.cliente == value)
+                if key == 'cliente_id':
+                    objetos = objetos.filter(self.modelo.cliente_id == value)
         return objetos
 
     def find_all(self):
@@ -36,8 +36,8 @@ class ApuestaRepositorio(Create, Read):
         if request.get_json():
             filters = request.get_json().items()
             for key, value in filters:
-                if key == 'cliente':
-                    objetos = objetos.filter(self.modelo.cliente == value)    
+                if key == 'cliente_id':
+                    objetos = objetos.filter(self.modelo.cliente_id == value)    
         return objetos
 
     def create(self, objeto):

@@ -10,6 +10,7 @@ class Equipo(db.Model):
     __puntaje = db.Column('puntaje', db.Float, nullable=False)
     __activado = db.Column('activado', db.Boolean, nullable=False, default=True)
     apuestas = db.relationship('Apuesta', back_populates="equipo_ganador", cascade="all, delete-orphan")
+    # partidos = db.relationship('Partido', back_populates="ganador")
 
     @hybrid_property
     def id(self):

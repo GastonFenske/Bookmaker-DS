@@ -16,6 +16,7 @@ class Apuesta(db.Model):
     __cliente_id = db.Column('cliente', db.Integer, db.ForeignKey('clientes.id'), nullable=False)
     cliente = db.relationship('Cliente', back_populates='apuestas')
 
+    # ganador = db.relation_ship('Partido', back_populates=)
     __ganancia = db.Column('ganacia', db.Float, nullable=False)
 
 
