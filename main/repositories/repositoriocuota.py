@@ -17,7 +17,7 @@ class CuotaRepositorio(Read, Create):
         return cuota
 
     def find_by_partido(self, objeto):
-        cuota = db.session.query(self.modelo).filter(self.modelo.partido_id == objeto.partido)[0]
+        cuota = db.session.query(self.modelo).filter(self.modelo.partido_id == objeto.partido_id)[0]
         return cuota
 
     def find_all(self):

@@ -10,8 +10,12 @@ class Apuesta(db.Model):
     __equipo_ganador_id = db.Column('equipo_ganador_id', db.ForeignKey('equipos.id'), nullable=True)
     equipo_ganador = db.relationship('Equipo', back_populates='apuestas')
 
-    __partido = db.Column('partido', db.Integer, db.ForeignKey('partidos.id'), nullable=False)
-    __cliente = db.Column('cliente', db.Integer, db.ForeignKey('clientes.id'), nullable=False)
+    __partido_id = db.Column('partido', db.Integer, db.ForeignKey('partidos.id'), nullable=False)
+    partido = db.relationship('Partido', back_populates='apuestas')
+
+    __cliente_id = db.Column('cliente', db.Integer, db.ForeignKey('clientes.id'), nullable=False)
+    cliente = db.relationship('Cliente', back_populates='apuestas')
+
     __ganancia = db.Column('ganacia', db.Float, nullable=False)
 
 
@@ -74,28 +78,28 @@ class Apuesta(db.Model):
         del self.__equipo_ganador_id   
 
     @hybrid_property
-    def partido(self):
-        return self.__partido
+    def partido_id(self):
+        return self.__partido_id
 
-    @partido.setter
-    def partido(self, partido):
-        self.__partido = partido
+    @partido_id.setter
+    def partido_id(self, partido_id):
+        self.__partido_id = partido_id
 
-    @partido.deleter
-    def partido(self):
-        del self.__partido
+    @partido_id.deleter
+    def partido_id(self):
+        del self.__partido_id
 
     @hybrid_property
-    def cliente(self):
-        return self.__cliente
+    def cliente_id(self):
+        return self.__cliente_id
 
-    @cliente.setter
-    def cliente(self, cliente):
-        self.__cliente = cliente
+    @cliente_id.setter
+    def cliente_id(self, cliente_id):
+        self.__cliente_id = cliente_id
 
-    @cliente.deleter
-    def cliente(self):
-        del self.__cliente 
+    @cliente_id.deleter
+    def cliente_id(self):
+        del self.__cliente_id 
 
     @hybrid_property
     def ganancia(self):

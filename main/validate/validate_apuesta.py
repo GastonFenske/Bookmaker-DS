@@ -3,7 +3,7 @@ from .validate_partido import ValidatePartido
 from .validate_cliente import ValidateCliente
 from main.models import ApuestaModel
 from .. import db
-# from main.services.apuesta import ApuestaService
+from main.services.apuesta import ApuestaService
 
 validate_equipo = ValidateEquipo()
 validate_partido = ValidatePartido()
@@ -36,11 +36,11 @@ class ValidateApuesta():
     def validar_apuesta(self, objeto):
         def decorator(function):
             def wrapper(*args, **kwargs):
-                @validate_cliente.validar_cliente(objeto.cliente)
-                @validate_equipo.validar_equipo(objeto.equipo_ganador_id)
+                @validate_cliente.validar_cliente(objeto.cliente_id)
+                @validate_equipo.validar_equipo(objeto)
                 @self.validar_monto(objeto.monto)
-                @validate_partido.validar_partido(objeto.partido)
-                @validate_partido.validar_partido_finalizado(objeto.partido)
+                @validate_partido.validar_partido(objeto.partido_id)
+                @validate_partido.validar_partido_finalizado(objeto.partido_id)
                 def add():
                     return function(*args, **kwargs)
                 return add()

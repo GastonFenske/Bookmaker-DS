@@ -1,9 +1,9 @@
-from main.repositories import CuotaRepositorio
-from .partidos import PartidoService
+from main.repositories.repositoriocuota import CuotaRepositorio
+from main.services.partidos import PartidoService
 # from main.services import PartidoService
 # from . import PartidoService
 # from main.services.partidos import PartidoService
-from .equipo import EquipoService
+from main.services.equipo import EquipoService
 from math import cos
 
 

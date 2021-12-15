@@ -1,4 +1,3 @@
-from main import repositories
 from main.repositories import ClienteRepositorio
 
 

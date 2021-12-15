@@ -4,12 +4,13 @@ from main import repositories
 from main.services import ApuestaService
 from main.map import ApuestaSchema
 from main.repositories import ApuestaRepositorio
-from main.validate import ValidateApuesta
+from main.validate import ValidateApuesta, ValidatePartido, validate_partido
 
 apuesta_schema = ApuestaSchema()
 repositorio_apuesta = ApuestaRepositorio()
 apuesta_service = ApuestaService()
 validate_apuesta = ValidateApuesta()
+validate_partido = ValidatePartido()
 
 class Apuesta(Resource):
     def get(self, id):
@@ -24,7 +25,9 @@ class Apuestas(Resource):
         apuesta = apuesta_schema.load(request.get_json())
         @validate_apuesta.validar_apuesta(apuesta)
         def validate_post():
-            return apuesta_schema.dump(apuesta_service.agregar_apuesta(apuesta))
+            local = validate_partido.validar_partido_local(apuesta)
+            visitante = validate_partido.validar_partido_visitante(apuesta)
+            return apuesta_schema.dump(apuesta_service.agregar_apuesta(apuesta, local=local, visitante=visitante))
         return validate_post()
 
     def get(self):

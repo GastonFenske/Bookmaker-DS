@@ -1,4 +1,4 @@
-from main.repositories import EquipoRepositorio
+from main.repositories.repositorioequipo import EquipoRepositorio
 
 repositorio = EquipoRepositorio()
 

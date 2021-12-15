@@ -16,6 +16,7 @@ class Partido(db.Model):
     # __goles_local = db.Column('goles_local', db.Integer, nullable=False)
     # __goles_visitante = db.Column('goles_visitante', db.Integer, nullable=False)
     cuota = db.relationship('Cuota', back_populates='partido', uselist=False)
+    apuestas = db.relationship('Apuesta', back_populates="partido", cascade="all, delete-orphan")
 
 
     @hybrid_property

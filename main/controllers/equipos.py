@@ -24,7 +24,7 @@ class Equipos(Resource):
 class Equipo(Resource):
 
     def get(self, id):
-        @validate_equipo.validar_equipo(id)
+        @validate_equipo.validar_equipos(id)
         def validated():
             return equipo_schema.dump(equipo_service.obtener_equipo_por_id(id))
         return validated()
@@ -32,13 +32,13 @@ class Equipo(Resource):
     #Esto quizas se puede mejorar con lamda functions
     #Mejorar esto con lamda functions
     def delete(self, id):
-        @validate_equipo.validar_equipo(id)
+        @validate_equipo.validar_equipos(id)
         def validated():
             return equipo_schema.dump(equipo_service.eliminar_equipo(id))
         return validated()
 
     def put(self, id):
-        @validate_equipo.validar_equipo(id)
+        @validate_equipo.validar_equipos(id)
         def validated():
             equipo = request.get_json()
             return equipo_schema.dump(equipo_service.actualizar_equipo(id, equipo))

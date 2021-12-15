@@ -1,8 +1,8 @@
 # from .. import db
 # from main.models import PartidoModel
-from main.repositories import PartidoRepositorio
+from main.repositories.repositoriopartido import PartidoRepositorio
 from main.map import PartidoSchema
-from .decorators import validar_equipo
+# from .decorators import validar_equipo
 # from .cuota import CuotaService
 # from main.services import CuotaService
 # from . import CuotaService

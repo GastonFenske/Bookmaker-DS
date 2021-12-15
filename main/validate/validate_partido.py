@@ -2,6 +2,7 @@ from main.models import PartidoModel
 from .. import db
 
 class ValidatePartido():
+    pass
 
     def __init__(self):
         self.__modelo = PartidoModel
@@ -44,4 +45,5 @@ class ValidatePartido():
 
     def validar_partido_empate(self, objeto):
         """"""
+        pass
         # partido_empate = db.session.query(PartidoModel).filter(PartidoModel.equipo_local_id == objeto.partido )

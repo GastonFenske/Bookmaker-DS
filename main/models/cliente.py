@@ -9,6 +9,7 @@ class Cliente(db.Model):
     __apellido = db.Column('apellido', db.String(50), nullable=False)
     __email = db.Column('email', db.String(120), nullable=False)
     __activado = db.Column('activado', db.Boolean, default=True, nullable=False)
+    apuestas = db.relationship('Apuesta', back_populates="cliente", cascade="all, delete-orphan")
 
     def __repr__(self):
         return f'{self.id}, {self.nombre}, {self.apellido}, {self.email}'
