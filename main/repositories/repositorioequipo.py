@@ -51,3 +51,13 @@ class EquipoRepositorio(Create, Read, Update, Delete):
 
     def max_puntaje(self):
         return self.__max_puntaje()
+
+    #Aca se podria aplicar algun patron
+    def verify_equipo_local(self, objeto):
+        equipo_local = db.session.query(PartidoModel).filter((PartidoModel.equipo_local_id == objeto.equipo_ganador_id) & (PartidoModel.id == objeto.partido_id)).count()
+        return True if equipo_local != 0 else False
+
+    def verify_equipo_visitante(self, objeto):
+        equipo_visitante = db.session.query(PartidoModel).filter((PartidoModel.equipo_visitante_id == objeto.equipo_ganador_id) & (PartidoModel.id == objeto.partido_id)).count()
+        return True if equipo_visitante != 0 else False
+

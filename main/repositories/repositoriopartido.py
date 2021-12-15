@@ -42,6 +42,7 @@ class PartidoRepositorio(Create, Read, Delete, Update):
         # # aplicar_probabilidades(cuota)
         return objeto
 
+    
     def update(self, objeto):
         db.session.add(objeto)
         db.session.commit()
@@ -52,4 +53,9 @@ class PartidoRepositorio(Create, Read, Delete, Update):
         db.session.delete(partido)
         db.session.commit()
         return partido
+
+
+
+
+
 
