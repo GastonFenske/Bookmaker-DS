@@ -38,7 +38,7 @@ class ClienteRepositorio(Create, Read, Delete, Update):
         self.soft_delete(objeto, id)
 
     def __soft_delete(self, objeto, id):
-        objeto.activado = False #
+        objeto.activado = False 
         self.update(objeto, id)
 
     def soft_delete(self, objeto, id):

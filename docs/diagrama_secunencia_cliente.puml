@@ -2,29 +2,49 @@
 
 actor Admin
 boundary ClienteController
-boundary ClientesController
+participant ClienteRepositorio
+participant ClienteService
 participant ClienteSchema
 entity ClienteModel
 database data
 
-Admin -> ClienteController: GET by Id (Request)
+
+Admin -> ClienteController: GET by Id(request)
 activate ClienteController
-ClienteController -> ClienteModel: get_or_404()
+ClienteController -> ClienteRepositorio: get_or_404()
+activate ClienteRepositorio
+ClienteRepositorio -> ClienteService: obtener_cliente
+deactivate ClienteRepositorio
+activate ClienteService
+ClienteService -> ClienteSchema: Cliente_id
+deactivate ClienteService
+activate ClienteSchema
+ClienteSchema -> ClienteModel: objeto cliente
+deactivate ClienteSchema
 activate ClienteModel
 CienteModel -> data: query (SELECT)
 ClienteModel <- data: Registro
 ClienteSchema <- ClienteModel: Objeto cliente
 deactivate ClienteModel
 activate ClienteSchema
-ClienteController <- ClienteSchema: json cliente
+ClienteService <- ClienteSchema: json cliente
 deactivate ClienteSchema
+activate ClienteService 
+ClienteRepositorio <- ClienteService: json cliente
+deactivate ClienteService
+activate ClienteRepositorio
+ClienteController <- ClienteRepositorio: ClienteModel
+deactivate ClienteRepositorio
 Admin <- ClienteController: json (Response)
 deactivate ClienteController
 
 
 Admin -> ClienteController: PUT by id (Request)
 activate ClienteController
-ClienteController -> ClienteModel: get_or_404()
+ClienteController -> ClienteRepositorio: get_or_404()
+activate ClienteRepositorio
+ClienteRepositorio -> ClienteModel: obtener cliente
+deactivate ClienteRepositorio
 activate ClienteModel
 ClienteModel -> data: query (SELECT)
 ClienteModel <- data: Registro
@@ -38,14 +58,20 @@ ClienteModel <- data: Registro
 ClienteSchema <- ClienteModel: Objeto cliente
 deactivate ClienteModel
 activate ClienteSchema
-ClienteController <- ClienteSchema: Json ClienteModel
+ClienteRepositorio <- ClienteSchema: Json Cliente
 deactivate ClienteSchema
+activate ClienteRepositorio
+ClienteController <- ClienteRepositorio: ClienteModel
+deactivate ClienteRepositorio
 Admin <- ClienteController: json (Response)
 deactivate ClienteController
 
 Admin -> ClienteController: DELETE by id (Request)
 activate ClienteController
-ClienteController -> ClienteModel: get_or_404()
+ClienteController -> ClienteRepositorio: get_or_404()
+activate ClienteRepositorio
+ClienteRepositorio -> ClienteModel: obtener cliente
+deactivate ClienteRepositorio
 activate ClienteModel
 ClienteModel -> data: query (SELECT)
 ClienteController <- data: Registro
@@ -59,7 +85,7 @@ deactivate ClienteModel
 Admin <- ClienteController: Request (Status 204)
 deactivate ClienteController
 
-Admin -> ClientesControllers: GET by Id (Request)
+Admin -> ClientesControllers: GET All (Request)
 activate ClientesControllers
 ClientesControllers -> ClienteModel: all
 activate ClienteModel
