@@ -2,8 +2,8 @@
 
 actor Admin
 boundary ClienteController
-participant ClienteRepositorio
 participant ClienteService
+participant ClienteRepositorio
 participant ClienteSchema
 entity ClienteModel
 database data
@@ -11,27 +11,15 @@ database data
 
 Admin -> ClienteController: GET by Id(request)
 activate ClienteController
-ClienteController -> ClienteRepositorio: get_or_404()
-activate ClienteRepositorio
-ClienteRepositorio -> ClienteService: obtener_cliente
-deactivate ClienteRepositorio
-activate ClienteService
-ClienteService -> ClienteSchema: Cliente_id
-deactivate ClienteService
-activate ClienteSchema
-ClienteSchema -> ClienteModel: objeto cliente
-deactivate ClienteSchema
+ClienteController -> ClienteModel: get_or_404()
 activate ClienteModel
 CienteModel -> data: query (SELECT)
 ClienteModel <- data: Registro
 ClienteSchema <- ClienteModel: Objeto cliente
 deactivate ClienteModel
 activate ClienteSchema
-ClienteService <- ClienteSchema: json cliente
+ClienteRepositorio <- ClienteSchema: json cliente
 deactivate ClienteSchema
-activate ClienteService 
-ClienteRepositorio <- ClienteService: json cliente
-deactivate ClienteService
 activate ClienteRepositorio
 ClienteController <- ClienteRepositorio: ClienteModel
 deactivate ClienteRepositorio
@@ -41,10 +29,7 @@ deactivate ClienteController
 
 Admin -> ClienteController: PUT by id (Request)
 activate ClienteController
-ClienteController -> ClienteRepositorio: get_or_404()
-activate ClienteRepositorio
-ClienteRepositorio -> ClienteModel: obtener cliente
-deactivate ClienteRepositorio
+ClienteController -> ClienteModel: get_or_404()
 activate ClienteModel
 ClienteModel -> data: query (SELECT)
 ClienteModel <- data: Registro
@@ -68,10 +53,8 @@ deactivate ClienteController
 
 Admin -> ClienteController: DELETE by id (Request)
 activate ClienteController
-ClienteController -> ClienteRepositorio: get_or_404()
-activate ClienteRepositorio
-ClienteRepositorio -> ClienteModel: obtener cliente
-deactivate ClienteRepositorio
+ClienteController -> ClienteModel: get_or_404()
+
 activate ClienteModel
 ClienteModel -> data: query (SELECT)
 ClienteController <- data: Registro

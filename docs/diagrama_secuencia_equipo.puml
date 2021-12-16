@@ -2,6 +2,8 @@
 
 actor Admin
 boundary EquipoController
+participant EquipoService
+participant EquipoRepositorio
 participant EquipoSchema
 entity EquipoModel
 database data
@@ -12,11 +14,14 @@ EquipoController -> EquipoModel: get_or_404()
 activate EquipoModel
 EquipoModel -> data: query (SELECT)
 EquipoModel <- data: Register
-EquipoSchema <- EquipoModel: Object cliente
+EquipoSchema <- EquipoModel: Objeto equipo
 deactivate EquipoModel
 activate EquipoSchema
-EquipoController <- EquipoSchema: Json cliente
+EquipoRepositorio <- EquipoSchema: Json equipo
 deactivate EquipoSchema
+activate EquipoRepositorio
+EquipoController <- EquipoRepositorio: EquipoModel
+deactivate EquipoRepositorio
 Admin <- EquipoController: json (Response)
 deactivate EquipoController
 
@@ -26,17 +31,17 @@ EquipoController -> EquipoModel: get_or_404()
 activate EquipoModel
 EquipoModel -> data: query (SELECT)
 EquipoModel <- data: Register
-EquipoController <- EquipoModel: Object cliente
+EquipoController <- EquipoModel: Object equipo
 deactivate EquipoModel
 EquipoController -> EquipoModel: Add
 activate EquipoModel
 EquipoController -> EquipoModel: Commit
 EquipoModel -> data: UPDATE
 EquipoModel <- data: Register
-EquipoSchema <- EquipoModel: Object cliente
+EquipoSchema <- EquipoModel: Object equipo
 deactivate EquipoModel
 activate EquipoSchema
-EquipoController <- EquipoSchema: Json cliente
+EquipoController <- EquipoSchema: Json equipo
 deactivate EquipoSchema
 Admin <- EquipoController: json (Response)
 deactivate EquipoController

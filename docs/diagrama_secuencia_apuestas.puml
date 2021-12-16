@@ -2,37 +2,45 @@
 
 actor Cliente
 boundary ApuestaController
+participant ApuestaService
+participant ApuestaRepositorio
 participant PartidoSchema
 participant ApuestaSchema
 participant PartidoModel
 participant ApuestaModel
 database data
 
-Cliente -> ApuestaController: GET all
+Cliente -> ApuestaController: GET by Id
 activate ApuestaController
-ApuestaController -> PartidoModel: get all partidos 
+ApuestaController -> PartidoModel: get(id)
 activate PartidoModel
 PartidoModel -> data: select all
 PartidoModel <- data: registro partidos 
-PartidoSchema <- PartidoModel: dump many=True
+PartidoSchema <- PartidoModel: dump
 deactivate PartidoModel
 activate PartidoSchema
-PartidoSchema -> ApuestaController: collection Json
+PartidoSchema -> ApuestaRepositorio: collection Json
 deactivate PartidoSchema
+activate ApuestaRepositorio
+ApuestaController <- ApuestaRepositorio: ApuestaModel
+deactivate ApuestaRepositorio
 Cliente <- ApuestaController: Json
 deactivate ApuestaController
 
 Cliente -> ApuestaController: POST
 activate ApuestaController
-ApuestaController -> ApuestaModel: guardar apuesta
+ApuestaController -> ApuestaModel: agregar apuesta
 activate ApuestaModel
 ApuestaModel -> data: Insert
 ApuestaModel <- data: Object
 ApuestaSchema <- ApuestaModel: Dump Object
 deactivate ApuestaModel
 activate ApuestaSchema
-ApuestaSchema -> ApuestaController: Json
+ApuestaSchema -> ApuestaRepositorio: Json
 deactivate ApuestaSchema
+activate ApuestaRepositorio
+ApuestaController <- ApuestaRepositorio: ApuestaModel
+deactivate ApuestaRepositorio
 Cliente <- ApuestaController: Json
 deactivate ApuestaController
 
@@ -45,8 +53,11 @@ PartidoModel <- data: registro partidos
 PartidoSchema <- PartidoModel: dump many=True
 deactivate PartidoModel
 activate PartidoSchema
-PartidoSchema -> ApuestaController: collection Json
+PartidoSchema -> ApuestaRepositorio: collection Json
 deactivate PartidoSchema
+activate ApuestaRepositorio
+ApuestaController <- ApuestaRepositorio: ApuestaModel
+deactivate ApuestaRepositorio
 Cliente <- ApuestaController: Json
 deactivate ApuestaController
 
