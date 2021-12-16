@@ -5,7 +5,6 @@ class Cliente {
     - apellido
     - email 
     - activado: Boolean
-    - apuestas
 }
 
 class Empresa {
@@ -21,14 +20,13 @@ class Equipo {
     - escudo
     - pais 
     - puntaje 
-    - apuestas
-    - activado: Boolean
 }
 
 class Apuesta {
     - id 
     - monto
     - fecha
+    - equipo_ganador
     - equipo_ganador_id
     - partido_id
     - cliente_id
@@ -37,22 +35,35 @@ class Apuesta {
 
 class Partido {
     - id
+    - cuota
     - fecha 
-    - equipo_local
-    - equipo_visitante
+    - equipo_local_id
+    - equipo_visitante_id
     - finalizado 
     - equipo_ganador_id
 }
 
+class Cuota {
+    - id
+    - partido_id
+    - probabilidad_empate
+    - probabilidad_local
+    - probabilidad_visitante
+}
+
+
+Empresa --* Cliente: crea al
 Equipo --* Partido: equipo local
 Equipo --* Partido: equipo visitante
 
 Cliente --> Apuesta: realiza apuesta
+Partido --> Cuota: tiene una
 
 Cliente --|> Model
 Empresa --|> Model
 Partido --|> Model
 Equipo --|> Model
+Cuota --|> Model
 
 Apuesta --> Partido: se realiza sobre
 
