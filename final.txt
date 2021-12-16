@@ -13,3 +13,5 @@ Cuando agreguemos un partido que automaticamente se agregue una cuota de ese par
 El ORM esta cargando las relaciones, el problema parece que son los schemas
 
 Acomodar las relaciones de los equipos para un partido, para cuando se imprima el json en la api
+
+Pibes cuando vayan a rendir esto tienen que volver a activar los load del app.py

@@ -92,7 +92,6 @@ if __name__ == '__main__':
 [e] Para el email
 >>>: """))
     logger = LoggerFactoryImpl().getLogger(tipo=type_log)
-    #logger = LoggerEmail()
     logger.info('Valor de la variable', 123)
     logger.warning('Valor de la varaible', 456)
     logger.error('Valor de la variable', 789)
